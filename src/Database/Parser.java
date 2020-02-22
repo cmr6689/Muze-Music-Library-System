@@ -83,24 +83,32 @@ public class Parser {
 
         while((line = reader.readLine()) != null){
 
-            boolean print =line.contains("Something in the Way");
-
-
             ArrayList<String> fields = splitLine(line);
 
-            if(print){
-                System.out.println(fields.get(3));
-            }
             Song song =  new Song(fields);
 
         }
+    }
 
+    private void readRelease(Database db, String name) throws IOException{
+        BufferedReader reader =createReader(name);
+        String line= "";
+
+        while((line = reader.readLine()) != null){
+
+            ArrayList<String> fields = splitLine(line);
+            Release release =  new Release(fields);
+
+
+
+        }
     }
 
     public void parse(Database database) throws IOException {
 
         readArtists(database,artistFile);
         readSong(database,songFile);
+        readRelease(database,releaseFile);
 
     }
 
