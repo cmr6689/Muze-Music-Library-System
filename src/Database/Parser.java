@@ -26,7 +26,7 @@ public class Parser {
     }
 
     private ArrayList<String> splitLine(String line){
-        System.out.println("Line is: " + line);
+        //System.out.println("Line is: " + line);
         ArrayList<String> returned =  new ArrayList<>();
         String[] tempField = line.split(",");
         if(!line.contains("\"")){
@@ -60,9 +60,9 @@ public class Parser {
         String line= "";
         while((line = reader.readLine()) != null){
             ArrayList<String> fields = splitLine(line);
-            
+            Artist artist =  new Artist(fields);
+            db.addArtist(artist);
         }
-
 
     }
 
