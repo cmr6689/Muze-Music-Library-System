@@ -25,6 +25,16 @@ public class Parser {
 
     }
 
+    private String removeLeadingComma(String line){
+        if(line.startsWith(",")){
+
+            return line.substring(1);
+        }
+        else{
+            return line;
+        }
+    }
+
     private ArrayList<String> splitLine(String line){
         //System.out.println("Line is: " + line);
         ArrayList<String> returned =  new ArrayList<>();
@@ -39,17 +49,18 @@ public class Parser {
         for(String s: tempField){
             if(!s.contains("\"")){
                 if(tempRunning!= ""){
-                    returned.add(tempRunning);
+
+                    returned.add(removeLeadingComma(tempRunning));
                     tempRunning = "";
                 }
                 returned.add(s);
             }
             else{
-                tempRunning += s;
+                tempRunning += "," + s;
             }
         }
         if(!tempRunning.equals("\"")){
-            returned.add(tempRunning);
+            returned.add(removeLeadingComma(tempRunning));
         }
 
         return returned;
