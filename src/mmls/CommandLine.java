@@ -25,7 +25,7 @@ public class CommandLine {
     private static final String LIBRARY_LIST_REQUEST_PATTERN = "^library list$";
 
     private static final String WELCOME_TEXT = "Welcome to the Muze Music Library System.";
-    private static final String INPUT_PROMPT_TEXT = "Please enter a command.";
+    private static final String INPUT_PROMPT_TEXT = "Please enter a command.\nUser: ";
 
     public static void main(String ...args) {
 
@@ -35,7 +35,7 @@ public class CommandLine {
 
         String userInput;
         System.out.println(WELCOME_TEXT);
-        System.out.println(INPUT_PROMPT_TEXT);
+        System.out.print(INPUT_PROMPT_TEXT);
         userInput = scanner.nextLine();
 
         Matcher m = r.matcher(userInput);
