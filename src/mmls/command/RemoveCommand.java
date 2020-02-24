@@ -3,8 +3,8 @@ package mmls.command;
 import mmls.library.Library;
 import mmls.library.LibraryItem;
 
-public class AddCommand extends LibraryCommand {
-    public AddCommand(Library library, LibraryItem targetItem) {
+public class RemoveCommand extends LibraryCommand {
+    public RemoveCommand(Library library, LibraryItem targetItem) {
         super(library, targetItem);
     }
 
