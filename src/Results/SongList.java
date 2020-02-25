@@ -1,6 +1,9 @@
 package Results;
 
+import Database.Database;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SongList implements ResultSorter {
 
@@ -68,6 +71,38 @@ public class SongList implements ResultSorter {
         sortAlphabetically(updatedSongs);
     }
 
+
+    private void createSongMaxList(){
+
+    }
+
+    private void createSongMinList(){
+
+    }
+
+    private void sortMax(HashMap<String, Float> durationList, float max){
+        createSongMaxList();
+
+        ArrayList<String> updatedSongs = new ArrayList<>();
+        for(String song: durationList.keySet()){
+            if (durationList.get(song) < max){
+                updatedSongs.add(song);
+            }
+        }
+        sortAlphabetically(updatedSongs);
+    }
+
+    private void sortMin(HashMap<String, Float> durationList, float min){
+        createSongMinList();
+
+        ArrayList<String> updatedSongs = new ArrayList<>();
+        for(String song: durationList.keySet()){
+            if (durationList.get(song) > min){
+                updatedSongs.add(song);
+            }
+        }
+        sortAlphabetically(updatedSongs);
+    }
     //Sorting Song Results:
     //Title
     //Artist Name
