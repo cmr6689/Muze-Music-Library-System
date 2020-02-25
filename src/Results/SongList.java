@@ -1,5 +1,7 @@
 package Results;
 
+import java.util.ArrayList;
+
 public class SongList implements ResultSorter {
 
     private void sortSongs() {
@@ -7,11 +9,11 @@ public class SongList implements ResultSorter {
     }
 
     private void sortAquistDate() {
-
     }
 
+
     @Override
-    public void sortAlphabetically() {
+    public void sortAlphabetically(ArrayList<String> updatedList) {
 
     }
 

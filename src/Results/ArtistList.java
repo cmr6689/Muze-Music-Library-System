@@ -1,42 +1,35 @@
 package Results;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ArtistList implements ResultSorter {
 
-    private static List<Integer> artistRating;
-    ArrayList<String> artists;
 
-    //ArrayList<Integer> artistRating;
-
-
-
-    public ArtistList(ArrayList<String> Artists) {
-        this.artists = Artists;
-
+    //Can find an artist by putting in part of the name ex: "twenty one" will find "twenty one pilots"
+    private void sortArtistName(ArrayList<String> artists, String words) {
+        ArrayList<String> updatedArtists = new ArrayList<>();
+        int length = artists.size();
+        for(int index = 0; index < length; index++) {
+            String artist = artists.get(index);
+            if(artist.contains(words)) {
+                updatedArtists.add(artist);
+            }
+        }
+        sortAlphabetically(updatedArtists);
     }
 
-    public void sortArtist() {
-        sortAlphabetically();
-    }
 
+    //Will sort the Artists alphabetically
+    //* Every result gets sorted alphabetically
     @Override
-    public void sortAlphabetically() {
-        java.util.Collections.sort(artists);
-        System.out.println(artists);
+    public void sortAlphabetically(ArrayList<String> updatedList) {
+        java.util.Collections.sort(updatedList);
+        System.out.println(updatedList);
 
     }
 
     @Override
     public void sortRating() {
-        int userRating = 9;
-        for (int rating: artistRating){
-            if(rating <= userRating){
-                artistRating.remove(rating);
-            }
-        }
-        System.out.println(artistRating);
 
     }
 
@@ -51,13 +44,12 @@ public class ArtistList implements ResultSorter {
         artists.add("JuiceWRLD");
         artists.add("Lil Tecca");
         artists.add("XXXTENTACION");
+        artists.add("Luke Bryan");
         artists.add("Kane Brown");
-
-        ArtistList artistList = new ArtistList(artists);
-        artistList.sortAlphabetically();
-        artistRating.add(3);
-        artistRating.add(3);
-        artistRating.add(4);
-        artistRating.add(5);
+        artists.add("Lil Mosey");
+        artists.add("Lil Pump");
+        artists.add("Lil Tjay");
+        ArtistList artistList = new ArtistList();
+        artistList.sortArtistName(artists, "Lil");
     }
 }
