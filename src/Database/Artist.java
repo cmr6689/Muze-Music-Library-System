@@ -19,6 +19,10 @@ public class Artist {
         }
     }
 
+    public boolean equalsID(String s){
+        return id.equals(s);
+    }
+
     public String getId() {
         return id;
     }
@@ -42,6 +46,6 @@ public class Artist {
 
     @Override
     public String toString(){
-        return id + " " + name;
+        return  name;
     }
 }
