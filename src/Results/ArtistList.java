@@ -1,11 +1,14 @@
 package Results;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArtistList implements ResultSorter {
 
+    private static List<Integer> artistRating;
     ArrayList<String> artists;
 
+    //ArrayList<Integer> artistRating;
 
 
 
@@ -14,7 +17,7 @@ public class ArtistList implements ResultSorter {
 
     }
 
-    private void sortArtist() {
+    public void sortArtist() {
         sortAlphabetically();
     }
 
@@ -27,6 +30,13 @@ public class ArtistList implements ResultSorter {
 
     @Override
     public void sortRating() {
+        int userRating = 9;
+        for (int rating: artistRating){
+            if(rating <= userRating){
+                artistRating.remove(rating);
+            }
+        }
+        System.out.println(artistRating);
 
     }
 
@@ -41,9 +51,13 @@ public class ArtistList implements ResultSorter {
         artists.add("JuiceWRLD");
         artists.add("Lil Tecca");
         artists.add("XXXTENTACION");
-        artists.add("Luke Bryan");
         artists.add("Kane Brown");
+
         ArtistList artistList = new ArtistList(artists);
         artistList.sortAlphabetically();
+        artistRating.add(3);
+        artistRating.add(3);
+        artistRating.add(4);
+        artistRating.add(5);
     }
 }
