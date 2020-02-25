@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface ResultSorter {
 
-    void sortAlphabetically();
+    void sortAlphabetically(ArrayList<String> updatedList);
     void sortRating();
 
 

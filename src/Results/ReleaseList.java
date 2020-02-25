@@ -1,5 +1,7 @@
 package Results;
 
+import java.util.ArrayList;
+
 public class ReleaseList implements ResultSorter {
 
     private void sortRelease() {
@@ -12,7 +14,7 @@ public class ReleaseList implements ResultSorter {
 
 
     @Override
-    public void sortAlphabetically() {
+    public void sortAlphabetically(ArrayList<String> updatedList) {
 
     }
 
