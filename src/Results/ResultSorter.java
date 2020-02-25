@@ -4,14 +4,8 @@ import java.util.ArrayList;
 
 public interface ResultSorter {
 
-    void sortAlphabetically();
-    void sortRating();
-    void sortArtist();
-    void sortRelease();
-    void sortAcquistDate();
-    void sortChronologically();
-    void sortSong();
-
+    void sortAlphabetically(ArrayList<String> updatedList);
+    void sortRating(ArrayList<String> arrayList, int userRating);
 
 
 

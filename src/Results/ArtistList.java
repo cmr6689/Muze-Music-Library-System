@@ -32,9 +32,11 @@ public class ArtistList implements ResultSorter {
 
     }
 
+    /**
+     * @param
+     */
     @Override
-    public void sortRating() {
-        int userRating = 9;
+    public void sortRating(ArrayList<String> arrayList, int userRating) {
         for (int rating: artistRating){
             if(rating <= userRating){
                 artistRating.remove(rating);
