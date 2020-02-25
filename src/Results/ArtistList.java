@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class ArtistList implements ResultSorter {
 
+    //Test Lists
+    ArrayList<Integer> artistRating = new ArrayList<>();
+
+
 
     //Can find an artist by putting in part of the name ex: "twenty one" will find "twenty one pilots"
     private void sortArtistName(ArrayList<String> artists, String words) {
@@ -30,8 +34,16 @@ public class ArtistList implements ResultSorter {
 
     @Override
     public void sortRating() {
+        int userRating = 9;
+        for (int rating: artistRating){
+            if(rating <= userRating){
+                artistRating.remove(rating);
+            }
+        }
+        System.out.println(artistRating);
 
     }
+
 
     //Sorting Artist Results:
     //By Rating
