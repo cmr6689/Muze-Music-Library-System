@@ -30,6 +30,13 @@ public class ArtistList implements ResultSorter {
 
     @Override
     public void sortRating() {
+        int userRating = 9;
+        for (int rating: artistRating){
+            if(rating <= userRating){
+                artistRating.remove(rating);
+            }
+        }
+        System.out.println(artistRating);
 
     }
 
