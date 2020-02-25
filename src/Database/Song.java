@@ -36,4 +36,8 @@ public class Song {
     public String toString(){
         return title + " by " + artistId;
     }
+
+    public boolean equalsGUID(String id){
+        return this.id.equals(id);
+    }
 }

@@ -35,7 +35,9 @@ public class Database {
     }
 
     public void addRelease(Release release){
+        release.swapTracks(songs);
         releases.add(release);
+
     }
 
 }
