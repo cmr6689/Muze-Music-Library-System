@@ -86,6 +86,7 @@ public class Parser {
             ArrayList<String> fields = splitLine(line);
 
             Song song =  new Song(fields);
+            db.addSong(song);
 
         }
     }
@@ -98,7 +99,7 @@ public class Parser {
 
             ArrayList<String> fields = splitLine(line);
             Release release =  new Release(fields);
-
+            db.addRelease(release);
 
 
         }
