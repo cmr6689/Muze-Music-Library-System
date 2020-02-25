@@ -14,6 +14,19 @@ public class ArtistList implements ResultSorter {
 
     }
 
+    //Can find an artist by putting in part of the name ex: "twenty one" will find "twenty one pilots"
+    private void sortArtistName(ArrayList<String> artists, String words) {
+        int length = artists.size();
+        for(int index = 0; index < length; index++) {
+            String artist = artists.get(index);
+            if(artist.contains(words)) {
+                System.out.println("Found: " + artist);
+            }
+        }
+
+
+    }
+
     //Testing
     private void sortArtist() {
         sortAlphabetically();
@@ -47,5 +60,6 @@ public class ArtistList implements ResultSorter {
         artists.add("Kane Brown");
         ArtistList artistList = new ArtistList(artists);
         artistList.sortAlphabetically();
+        artistList.sortArtistName(artists, "Lil");
     }
 }

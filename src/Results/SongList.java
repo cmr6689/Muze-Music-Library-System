@@ -7,7 +7,6 @@ public class SongList implements ResultSorter {
     }
 
     private void sortAquistDate() {
-
     }
 
     @Override
