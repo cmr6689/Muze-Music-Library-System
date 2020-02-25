@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 public class CommandLine {
     // e.g. search library artist The Beatles
     private static final String SEARCH_REQUEST_PATTERN = "^search (?<location>library|database) (?<type>artist|song|release) (?<keywords>[\\w]+[\\S ]*)$";
+    private static final String LIBRARY_SEARCH_ARTIST_REQUEST_PATTERN = "^library search artist(?: -n (?<name>[\\S]+[\\S ]*?))??(?: -t (?<type>[\\S]+[\\S ]*?))??(?: -r (?<minRating>[1-5]{1}))??$";
 
     // e.g. library add 19 date=02/04/2020 rating=5
     private static final String ADD_REQUEST_PATTERN = "^library add (?<id>[0-9]+)(?: date=(?<date>[0-9]{2}/[0-9]{2}/[0-9]{4}))?(?: rating=(?<rating>[1-5]{1}))?$";
@@ -30,7 +31,7 @@ public class CommandLine {
     public static void main(String ...args) {
 
 
-        Pattern r = Pattern.compile(ADD_REQUEST_PATTERN);
+        Pattern r = Pattern.compile(LIBRARY_SEARCH_ARTIST_REQUEST_PATTERN);
         Scanner scanner = new Scanner(System.in);
 
         String userInput;
@@ -40,7 +41,7 @@ public class CommandLine {
 
         Matcher m = r.matcher(userInput);
         if (m.matches()) {
-            System.out.println(m.group("date"));
+            System.out.println(m.group("name"));
         }
     }
 }
