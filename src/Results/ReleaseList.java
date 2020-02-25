@@ -8,6 +8,7 @@ public class ReleaseList implements ResultSorter {
 
     }
 
+
     private void sortAquistDate() {
 
     }
@@ -22,7 +23,6 @@ public class ReleaseList implements ResultSorter {
     public void sortRating() {
 
     }
-
     //Sorting Release Results:
     //Title
     //Artist Name
