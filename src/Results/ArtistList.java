@@ -97,7 +97,6 @@ public class ArtistList implements ResultSorter {
             }
         }
         sortAlphabetically(updatedList);
-
     }
 
     /**

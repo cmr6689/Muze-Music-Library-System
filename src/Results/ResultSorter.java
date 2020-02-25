@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface ResultSorter {
 
     void sortAlphabetically(ArrayList<String> updatedList);
-    void sortRating(ArrayList<Integer> arrayList, int userRating);
+    void sortRating(ArrayList<String> arrayList, int userRating);
 
 
 
