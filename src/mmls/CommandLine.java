@@ -8,6 +8,8 @@ public class CommandLine {
     // e.g. search library artist The Beatles
     private static final String SEARCH_REQUEST_PATTERN = "^search (?<location>library|database) (?<type>artist|song|release) (?<keywords>[\\w]+[\\S ]*)$";
     private static final String LIBRARY_SEARCH_ARTIST_REQUEST_PATTERN = "^library search artist(?: -n (?<name>[\\S]+[\\S ]*?))??(?: -t (?<type>[\\S]+[\\S ]*?))??(?: -r (?<minRating>[1-5]{1}))??$";
+    private static final String LIBRARY_SEARCH_SONG_REQUEST_PATTERN = "^library search song(?: -t (?<title>[\\S]+[\\S ]*?))??(?:(?: -an (?<artistName>[\\S]+[\\S ]*?))|(?: -aid (?<artistGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?:(?: -rt (?<releaseTitle>[\\S]+[\\S ]*?))|(?: -rid (?<releaseGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?: -mind (?<minDuration>[0-9]+?))??(?: -maxd (?<maxDuration>[0-9]+?))??(?: -mr (?<minRating>[1-5]{1}))??$";
+    private static final String LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN = "^library search release(?: -t (?<title>[\\S]+[\\S ]*?))??(?:(?: -an (?<artistName>[\\S]+[\\S ]*?))|(?: -aid (?<artistGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?:(?: -tn (?<trackName>[\\S]+[\\S ]*?))|(?: -tid (?<trackGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?: -mind (?<minDuration>[0-9]+?))??(?: -maxd (?<maxDuration>[0-9]+?))??(?: -mr (?<minRating>[1-5]{1}))??$";
 
     // e.g. library add 19 date=02/04/2020 rating=5
     private static final String ADD_REQUEST_PATTERN = "^library add (?<id>[0-9]+)(?: date=(?<date>[0-9]{2}/[0-9]{2}/[0-9]{4}))?(?: rating=(?<rating>[1-5]{1}))?$";
