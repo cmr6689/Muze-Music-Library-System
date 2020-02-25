@@ -22,7 +22,6 @@ public class ArtistList implements ResultSorter {
         sortAlphabetically(updatedArtists);
     }
 
-
     //Will sort the Artists alphabetically
     //* Every result gets sorted alphabetically
     @Override
@@ -33,16 +32,18 @@ public class ArtistList implements ResultSorter {
     }
 
     /**
-     * @param
+     * generic method to sort artists, songs and releases by rating
+     * @param arrayList - contains a list of artists, songs and releases
+     * @param userRating - the rating passed in by the command line
      */
     @Override
-    public void sortRating(ArrayList<String> arrayList, int userRating) {
-        for (int rating: artistRating){
+    public void sortRating(ArrayList<Integer> arrayList, int userRating) {
+        for (int rating: arrayList){
             if(rating <= userRating){
-                artistRating.remove(rating);
+                arrayList.remove(rating);
             }
         }
-        System.out.println(artistRating);
+        System.out.println(arrayList);
 
     }
 
