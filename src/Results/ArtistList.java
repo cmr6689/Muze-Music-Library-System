@@ -14,8 +14,10 @@ public class ArtistList implements ResultSorter {
 
     }
 
+    //Testing
     private void sortArtist() {
         sortAlphabetically();
+
     }
 
     @Override
