@@ -98,7 +98,7 @@ public class Parser {
         while((line = reader.readLine()) != null){
 
             ArrayList<String> fields = splitLine(line);
-            Release release =  new Release(fields);
+            Release release =  new Release(fields, db);
             db.addRelease(release);
 
 

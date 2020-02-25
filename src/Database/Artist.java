@@ -2,15 +2,17 @@ package Database;
 
 import java.util.ArrayList;
 
-public class Artist {
+public class Artist implements RatableObject {
 
     private String id;
     private String name;
     private String genre;
+    private double rating;
 
     public Artist(ArrayList<String> fields){
         id  = fields.get(0);
         name =  fields.get(1);
+        rating = 0;
         try{
             genre =  fields.get(2);
         }
@@ -47,5 +49,15 @@ public class Artist {
     @Override
     public String toString(){
         return  name;
+    }
+
+    @Override
+    public double getRating() {
+        return rating;
+    }
+
+    @Override
+    public void setRating(double rate) {
+        rating = rate;
     }
 }

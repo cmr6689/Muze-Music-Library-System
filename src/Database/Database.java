@@ -7,11 +7,13 @@ public class Database {
     private ArrayList<Song> songs;
     private ArrayList<Artist> artists;
     private ArrayList<Release> releases;
+    private Artist fauxArtist;
 
     public Database(){
         songs = new ArrayList<Song>();
         artists =  new ArrayList<Artist>();
         releases = new ArrayList<Release>();
+
     }
 
     public ArrayList<Song> getSongs(){
@@ -35,7 +37,7 @@ public class Database {
     }
 
     public void addRelease(Release release){
-        release.swapTracks(songs);
+
         releases.add(release);
 
     }
