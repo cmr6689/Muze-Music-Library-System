@@ -32,18 +32,18 @@ public class ArtistList implements ResultSorter {
     }
 
     /**
-     * generic method to sort artists, songs and releases by rating
-     * @param arrayList - contains a list of artists, songs and releases
+     * generic method to sort artists rating
+     * @param artistList - contains a list of artists
      * @param userRating - the rating passed in by the command line
      */
     @Override
-    public void sortRating(ArrayList<Integer> arrayList, int userRating) {
-        for (int rating: arrayList){
+    public void sortRating(ArrayList<Integer> artistList, int userRating) {
+        for (int rating: artistList){
             if(rating <= userRating){
-                arrayList.remove(rating);
+                artistList.remove(rating);
             }
         }
-        System.out.println(arrayList);
+        System.out.println(artistList);
 
     }
 
