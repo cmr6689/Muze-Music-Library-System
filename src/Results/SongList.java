@@ -72,16 +72,16 @@ public class SongList implements ResultSorter {
     }
 
 
-    private void createSongMaxList(){
+    private void createSongMaxMap(){
 
     }
 
-    private void createSongMinList(){
+    private void createSongMinMap(){
 
     }
 
     private void sortMax(HashMap<String, Float> durationList, float max){
-        createSongMaxList();
+        createSongMaxMap();
 
         ArrayList<String> updatedSongs = new ArrayList<>();
         for(String song: durationList.keySet()){
@@ -92,12 +92,42 @@ public class SongList implements ResultSorter {
         sortAlphabetically(updatedSongs);
     }
 
-    private void sortMin(HashMap<String, Float> durationList, float min){
-        createSongMinList();
+    private void sortByArtistName(HashMap<String, String> artistMap, String artist){
+        createArtistNameMap();
+        ArrayList<String> updatedSongs = new ArrayList<>();
+        for (String song: artistMap.keySet()){
+            if(artistMap.get(song).contains(artist)){
+                updatedSongs.add(song);
+            }
+        }
+        sortAlphabetically(updatedSongs);
+
+    }
+
+    private void sortByReleaseTitle(HashMap<String, String> releaseMap, String release){
+        createReleaseTitleMap();
+        ArrayList<String> updatedSongs = new ArrayList<>();
+        for (String song: releaseMap.keySet()){
+            if(releaseMap.get(song).contains(release)){
+                updatedSongs.add(song);
+            }
+        }
+        sortAlphabetically(updatedSongs);
+
+    }
+
+    private void createArtistNameMap(){
+
+    }
+    private void createReleaseTitleMap(){
+
+    }
+    private void sortMin(HashMap<String, Float> durationMap, float min){
+        createSongMinMap();
 
         ArrayList<String> updatedSongs = new ArrayList<>();
-        for(String song: durationList.keySet()){
-            if (durationList.get(song) > min){
+        for(String song: durationMap.keySet()){
+            if (durationMap.get(song) > min){
                 updatedSongs.add(song);
             }
         }
