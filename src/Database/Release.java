@@ -4,23 +4,57 @@ package Database;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Release {
+public class Release implements RatableObject {
 
-    String id;
-    String artistId;
-    String title;
-    String issueDate;
-    String medium;
+    private double rating;
+    private String id;
+    private String artistId;
+    private String title;
+    private String issueDate;
+    private String medium;
+    private Artist artist;
+    private List<String> tracksID;
+    private ArrayList<Song> tracks;
 
-    List<String> tracks;
-    public Release(ArrayList<String> fields){
+    public Release(ArrayList<String> fields, Database db){
         id = fields.get(0);
         artistId = fields.get(1);
         title = fields.get(2);
         issueDate = fields.get(4);
         medium =  fields.get(3);
-        tracks = fields.subList(5,fields.size());
+        tracksID = fields.subList(5,fields.size());
+        tracks = new ArrayList<>();
+        swapTracks(db.getSongs());
+        swapArtist(db.getArtists());
+        rating = 0;
+    }
 
+    @Override
+    public double getRating() {
+        return rating;
+    }
+
+    @Override
+    public void setRating(double rate){
+        rating = rate;
+    }
+
+    private void swapArtist(ArrayList<Artist> artists){
+        for(Artist a: artists){
+            if(a.equalsID(artistId)){
+                artist = a;
+                break;
+            }
+        }
+    }
+    private void swapTracks(ArrayList<Song> songs){
+        for(String s: tracksID){
+            for(Song song: songs){
+                if(song.equalsGUID(s)){
+                    tracks.add(song);
+                }
+            }
+        }
     }
 
     public String getId() {
@@ -35,6 +69,12 @@ public class Release {
         return title;
     }
 
+    public Artist getArtist(){
+        return artist;
+    }
+
+
+
     public String getIssueDate() {
         return issueDate;
     }
@@ -43,12 +83,16 @@ public class Release {
         return medium;
     }
 
-    public List<String> getTracks() {
+    public List<String> getTrackIds() {
+        return tracksID;
+    }
+
+    public ArrayList<Song> getTracks(){
         return tracks;
     }
 
     @Override
     public String toString(){
-        return title + " by " + artistId;
+        return title + " by " + artist;
     }
 }
