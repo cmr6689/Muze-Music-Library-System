@@ -4,5 +4,5 @@ import Database.Database;
 import mmls.library.Library;
 
 public interface Factory {
-    Command createCommand(String request, Library library, Database database);
+    Command createCommand(String request);
 }

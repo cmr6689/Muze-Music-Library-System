@@ -4,30 +4,34 @@ import Database.Artist;
 import Database.Release;
 import Database.Song;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Library {
-    private ArrayList<Song> songs;
-    private ArrayList<Release> releases;
-    private ArrayList<Artist> artists;
+    private Map<String, Song> songs;
+    private Map<String, Release> releases;
+    private Map<String, Artist> artists;
     private HashMap<String,Date> aqqDB;
     public Library() {
 
-        songs = new ArrayList<>();
-        releases = new ArrayList<>();
-        artists = new ArrayList<>();
+        songs = new HashMap<>();
+        releases = new HashMap<>();
+        artists = new HashMap<>();
         aqqDB =  new HashMap<>();
     }
 
     private void addSongDate(Song song, Date date){
-        if(!songs.contains(song)) {
-            songs.add(song);
+        String songGuid = song.getGuid();
+        Artist artist = song.getArtist();
+        String artistGuid = artist.getGuid();
+        if(!songs.containsKey(songGuid)) {
+            songs.put(songGuid, song);
 
-            if (!artists.contains(song.getArtist())) {
-                artists.add(song.getArtist());
+            if (!artists.containsKey(artistGuid)) {
+                artists.put(artistGuid, artist);
             }
         }
 
@@ -42,69 +46,53 @@ public class Library {
         addSongDate(song,date);
     }
 
-    private void removeSongID(String id, Artist artist){
-        for(Song s: songs){
-            if(s.equalsGuid(id)){
-                songs.remove(s);
-                for(Artist a : artists){
-                    if(a.equalsGuid(artist.getGuid())){
-                        artists.remove(a);
-                        break;
-                    }
-                }
-                break;
-            }
+//    private void removeSongID(String id, Artist artist){
+//        for(Song s: songs){
+//            if(s.equalsGuid(id)){
+//                songs.remove(s);
+//                for(Artist a : artists){
+//                    if(a.equalsGuid(artist.getGuid())){
+//                        artists.remove(a);
+//                        break;
+//                    }
+//                }
+//                break;
+//            }
+//        }
+//    }
+
+//    public void removeSong(Song song){
+//        String guid = song.getGuid();
+//        songs.remove(guid);
+//    }
+
+    public boolean removeSong(String guid){
+        boolean removed = false;
+        if (songs.containsKey(guid)) {
+            songs.remove(guid);
+            removed = true;
         }
-    }
-
-    public void removeSong(Song song){
-        String id = song.getGuid();
-        Artist artist = song.getArtist();
-        removeSongID(id,artist);
-    }
-
-    public boolean removeSong(String id){
-
-        for(Song s: songs){
-            if(s.equalsGuid(id)){
-                Artist artist =  s.getArtist();
-                removeSongID(id,artist);
-                return true;
-            }
-        }
-        return false;
+        return removed;
     }
 
     public void addRelease(Release release, Date date){
-        if(!releases.contains(release)){
-            releases.add(release);
+        String guid = release.getGuid();
+        if(!releases.containsKey(guid)){
+            releases.put(guid, release);
 
-            for(Song s: release.getTracks()){
+            for(Song s : release.getTracks()){
                 addSongDate(s,date);
             }
         }
     }
 
-
-
-    public void removeRelease(Release release){
-        String id = release.getGuid();
-        removeRelease(id);
-    }
-
-    public boolean removeRelease(String id){
-        for(Release r: releases){
-            if(r.getGuid().equals(id)){
-
-                ArrayList<Song> tracks = r.getTracks();
-                for(Song s: tracks){
-                    removeSong(s);
-                }
-                releases.remove(r);
-                return true;
-            }
+    public boolean removeRelease(String guid){
+        boolean removed = false;
+        if (releases.containsKey(guid)) {
+            releases.remove(guid);
+            removed = true;
         }
-        return false;
+        return removed;
     }
 
     public boolean removeItem(String guid) {
@@ -115,16 +103,16 @@ public class Library {
         return removed;
     }
 
-    public ArrayList<Song> getSongs(){
-        return songs;
+    public Collection<Song> getSongs(){
+        return songs.values();
     }
 
-    public ArrayList<Release> getReleases(){
-        return releases;
+    public Collection<Release> getReleases(){
+        return releases.values();
     }
 
-    public ArrayList<Artist> getArtists(){
-        return artists;
+    public Collection<Artist> getArtists(){
+        return artists.values();
     }
 
     public Date getAqqDate(String id){
