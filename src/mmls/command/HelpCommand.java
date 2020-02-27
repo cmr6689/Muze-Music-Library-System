@@ -1,19 +1,20 @@
-package factory;
+package mmls.command;
+
+import factory.Request;
 
 import java.util.ArrayList;
 
-public class HelpRequest implements Request{
+public class HelpCommand implements Command {
     private String command;
 
-    public HelpRequest(String command) {
+    public HelpCommand(String command) {
         this.command = command;
     }
 
     @Override
-    public ArrayList<String> invokeRequest() {
+    public void executeCommand() {
         ArrayList<String> possibleCommands = new ArrayList<>();
         possibleCommands.add("search [arguments]");
         possibleCommands.add("library [add/remove] [arguments]");
-        return possibleCommands;
     }
 }
