@@ -11,3 +11,12 @@ src/.DS_Store
 /.idea_old/*
 src/*.iml
 /src/*.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/libraries/bin.xml
+.idea/libraries/jdk_11_0.xml
+.idea/libraries/opencv_412.xml
