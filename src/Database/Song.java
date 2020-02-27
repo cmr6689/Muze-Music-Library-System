@@ -64,4 +64,20 @@ public class Song implements RatableObject {
     public void setRating(double rate) {
         rating = rate;
     }
+
+    public Artist getArtist(){
+        return artist;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Song){
+            Song temp = (Song)o;
+            return equalsGUID(temp.getId());
+        }
+        else{
+            return false;
+        }
+
+    }
 }
