@@ -1,10 +1,13 @@
 # IntelliJ #
 ############
-.idea/
+.idea_old/*
 *.iml
 *.DS_Store
 .DS_Store
 *.DS
 .DS_Store
 src/.DS_Store
-/.idea/
+/.idea_old/
+/.idea_old/*
+src/*.iml
+/src/*.iml
