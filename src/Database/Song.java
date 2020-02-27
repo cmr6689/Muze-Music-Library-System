@@ -1,18 +1,16 @@
 package Database;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
-public class Song implements RatableObject {
+public class Song extends Item {
 
     private String artistId;
-    private String id;
     private String duration;
     private String title;
     private Artist artist;
     private double rating;
     public Song(ArrayList<String> fields, Database db){
-        id =  fields.get(0);
+        guid =  fields.get(0);
         artistId =  fields.get(1);
         duration =  fields.get(2);
         title = fields.get(3);
@@ -22,7 +20,7 @@ public class Song implements RatableObject {
 
     private void swapArtistName(Database db){
         for(Artist a: db.getArtists()){
-            if(a.equalsID(artistId)){
+            if(a.equalsGuid(artistId)){
                 artist = a;
                 break;
             }
@@ -32,10 +30,6 @@ public class Song implements RatableObject {
 
     public String getArtistId() {
         return artistId;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getDuration() {
@@ -51,8 +45,8 @@ public class Song implements RatableObject {
         return title + " by " + artist;
     }
 
-    public boolean equalsGUID(String id){
-        return this.id.equals(id);
+    public boolean equalsGuid(String id){
+        return this.guid.equals(id);
     }
 
     @Override
@@ -73,7 +67,7 @@ public class Song implements RatableObject {
     public boolean equals(Object o){
         if(o instanceof Song){
             Song temp = (Song)o;
-            return equalsGUID(temp.getId());
+            return equalsGuid(temp.getGuid());
         }
         else{
             return false;

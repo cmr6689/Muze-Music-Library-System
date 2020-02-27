@@ -2,15 +2,13 @@ package Database;
 
 import java.util.ArrayList;
 
-public class Artist implements RatableObject {
-
-    private String id;
+public class Artist extends Item {
     private String name;
     private String genre;
     private double rating;
 
     public Artist(ArrayList<String> fields){
-        id  = fields.get(0);
+        guid  = fields.get(0);
         name =  fields.get(1);
         rating = 0;
         try{
@@ -21,12 +19,8 @@ public class Artist implements RatableObject {
         }
     }
 
-    public boolean equalsID(String s){
-        return id.equals(s);
-    }
-
-    public String getId() {
-        return id;
+    public boolean equalsGuid(String id){
+        return this.guid.equals(id);
     }
 
     public String getName() {

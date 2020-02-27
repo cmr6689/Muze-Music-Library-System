@@ -44,10 +44,10 @@ public class Library {
 
     private void removeSongID(String id, Artist artist){
         for(Song s: songs){
-            if(s.equalsGUID(id)){
+            if(s.equalsGuid(id)){
                 songs.remove(s);
                 for(Artist a : artists){
-                    if(a.equalsID(artist.getId())){
+                    if(a.equalsGuid(artist.getGuid())){
                         artists.remove(a);
                         break;
                     }
@@ -58,20 +58,21 @@ public class Library {
     }
 
     public void removeSong(Song song){
-        String id = song.getId();
+        String id = song.getGuid();
         Artist artist = song.getArtist();
         removeSongID(id,artist);
     }
 
-    public void removeSong(String id){
+    public boolean removeSong(String id){
 
         for(Song s: songs){
-            if(s.equalsGUID(id)){
+            if(s.equalsGuid(id)){
                 Artist artist =  s.getArtist();
                 removeSongID(id,artist);
-                break;
+                return true;
             }
         }
+        return false;
     }
 
     public void addRelease(Release release, Date date){
@@ -87,23 +88,31 @@ public class Library {
 
 
     public void removeRelease(Release release){
-        String id = release.getId();
+        String id = release.getGuid();
         removeRelease(id);
     }
 
-    public void removeRelease(String id){
-
+    public boolean removeRelease(String id){
         for(Release r: releases){
-            if(r.getId().equals(id)){
+            if(r.getGuid().equals(id)){
 
                 ArrayList<Song> tracks = r.getTracks();
                 for(Song s: tracks){
                     removeSong(s);
                 }
                 releases.remove(r);
+                return true;
             }
         }
+        return false;
+    }
 
+    public boolean removeItem(String guid) {
+        boolean removed = this.removeRelease(guid);
+        if (!removed) {
+            removed = this.removeSong(guid);
+        }
+        return removed;
     }
 
     public ArrayList<Song> getSongs(){

@@ -1,5 +1,8 @@
 package mmls.command;
 
+import Database.Database;
+import mmls.library.Library;
+
 public interface Factory {
-    Command createRequest(String request);
+    Command createCommand(String request, Library library, Database database);
 }

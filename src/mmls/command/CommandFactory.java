@@ -6,17 +6,9 @@ import mmls.library.Library;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RequestFactory implements Factory {
-    private String request;
-    private Library library;
-    private Database database;
-
-    public RequestFactory(String request, Library library, Database database) {
-        this.request = request;
-    }
-
+public class CommandFactory implements Factory {
     @Override
-    public Command createRequest(String request) {
+    public Command createCommand(String request, Library library, Database database) {
         String[] req = request.split(" ");
         ArrayList<String> args = new ArrayList<>(Arrays.asList(req));
         args.remove(0);
