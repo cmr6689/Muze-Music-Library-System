@@ -7,4 +7,6 @@
 *.DS
 .DS_Store
 src/.DS_Store
+*.class
+/production/
 /.idea/
