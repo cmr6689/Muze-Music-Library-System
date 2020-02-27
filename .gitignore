@@ -1,6 +1,6 @@
 # IntelliJ #
 ############
-.idea/
+.idea/*
 *.iml
 *.DS_Store
 .DS_Store
@@ -8,3 +8,6 @@
 .DS_Store
 src/.DS_Store
 /.idea/
+/.idea/*
+src/*.iml
+/src/*.iml
