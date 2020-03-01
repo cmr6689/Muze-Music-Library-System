@@ -16,7 +16,6 @@ public class Database {
         songs = new HashMap<String, Song>();
         artists =  new HashMap<String, Artist>();
         releases = new HashMap<String, Release>();
-
     }
 
     public Collection<Song> getSongs(){

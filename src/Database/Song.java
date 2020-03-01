@@ -6,7 +6,6 @@ public class Song extends Item {
 
     private String artistId;
     private String duration;
-    private String title;
     private Artist artist;
     private double rating;
     private String guid;
@@ -16,8 +15,9 @@ public class Song extends Item {
         artistId =  fields.get(1);
 
         duration =  fields.get(2);
-        title = fields.get(3);
-        if(title.contains("My Sweet Lord")){
+        String name = fields.get(3);
+        this.setName(name);
+        if(name.contains("My Sweet Lord")){
             for(String s: fields){
                 System.out.println(s);
             }
@@ -37,7 +37,7 @@ public class Song extends Item {
             if(debug){
                 System.out.println("BERRY");
                 System.out.println(a.getGuid().equals("89ad4ac3-39f7-470e-963a-56509c546377"));
-                System.out.println("Name: " +  title);
+                System.out.println("Name: " +  this.getName());
             }
             if(a.equalsGuid(artistId)){
                 ArrayList<String> vals =  new ArrayList<>();
@@ -63,13 +63,9 @@ public class Song extends Item {
         return duration;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     @Override
     public String toString(){
-        return title + " by " + artist;
+        return this.getName() + " by " + artist;
     }
 
     public boolean equalsGuid(String id){

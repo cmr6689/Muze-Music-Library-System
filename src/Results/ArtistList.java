@@ -151,5 +151,5 @@ public class ArtistList implements ResultSorter {
         System.out.println(updatedList);
 
     }
-    
+
 }
