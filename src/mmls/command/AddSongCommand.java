@@ -5,7 +5,7 @@ import mmls.library.Library;
 
 import java.text.ParseException;
 
-public class AddSongCommand extends AddCommand {
+/*public class AddSongCommand extends AddCommand {
     public AddSongCommand(Library library, Song newItem) {
         super(library, newItem);
     }
@@ -18,4 +18,4 @@ public class AddSongCommand extends AddCommand {
     public void executeCommand() {
         library.addSong((Song)newItem, this.acquisitionDate);
     }
-}
+}*/

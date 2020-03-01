@@ -2,7 +2,7 @@ package Results;
 
 import java.util.ArrayList;
 
-public class ReleaseList implements ResultSorter {
+/*public class ReleaseList implements ResultSorter {
 
     private void sortRelease() {
 
@@ -30,3 +30,4 @@ public class ReleaseList implements ResultSorter {
     //Duration
     //Rating
 }
+*/

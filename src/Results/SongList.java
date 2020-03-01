@@ -33,7 +33,7 @@ public class SongList implements ResultSorter {
         for (Song song : songs) {
             String current = " ";
             //Add Song Title
-            String songTitle = song.getTitle();
+           // String songTitle = song.getTitle();
             //Add Rating
             String Rating = Double.toString(song.getRating());
             //Add Acquisition

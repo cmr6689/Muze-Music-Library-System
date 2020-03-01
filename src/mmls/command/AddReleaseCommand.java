@@ -6,7 +6,7 @@ import mmls.library.Library;
 
 import java.text.ParseException;
 
-public class AddReleaseCommand extends AddCommand {
+/*public class AddReleaseCommand extends AddCommand {
     public AddReleaseCommand(Library library, Release newItem) {
         super(library, newItem);
     }
@@ -19,4 +19,4 @@ public class AddReleaseCommand extends AddCommand {
     public void executeCommand() {
         library.addRelease((Release)newItem, this.acquisitionDate);
     }
-}
+}*/
