@@ -16,6 +16,7 @@ public class Library implements Serializable {
     private Map<String, Release> releases;
     private Map<String, Artist> artists;
     private HashMap<String,Date> acquisitionDates;
+    PersistHelp persist = new PersistHelp();
     public Library() {
 
         songs = new HashMap<>();
@@ -35,6 +36,7 @@ public class Library implements Serializable {
                 artists.put(artistGuid, artist);
             }
         }
+        persist.serialize(this);
 
     }
 
@@ -93,6 +95,7 @@ public class Library implements Serializable {
             releases.remove(guid);
             removed = true;
         }
+        persist.serialize(this);
         return removed;
     }
 
@@ -101,7 +104,9 @@ public class Library implements Serializable {
         if (!removed) {
             removed = this.removeSong(guid);
         }
+        persist.serialize(this);
         return removed;
+
     }
 
     public Collection<Song> getSongs(){
@@ -122,6 +127,11 @@ public class Library implements Serializable {
 
     private void addDate(String id, Date date){
         acquisitionDates.put(id,date);
+    }
+
+    private void removeDate(String id){
+        acquisitionDates.remove(id);
+        persist.serialize(this);
     }
 
 }
