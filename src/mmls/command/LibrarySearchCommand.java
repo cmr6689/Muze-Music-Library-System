@@ -20,4 +20,14 @@ public abstract class LibrarySearchCommand implements Command {
     protected void notifyCommandFactory(List<Item> searchResults) {
         commandFactory.updateSearchResults(searchResults);
     }
+
+    protected String[] splitKeywords(String searchInput) {
+        String[] keywords;
+        try {
+            keywords = searchInput.trim().split(" ");
+        } catch (NullPointerException e) {
+            keywords = new String[]{searchInput};
+        }
+        return keywords;
+    }
 }

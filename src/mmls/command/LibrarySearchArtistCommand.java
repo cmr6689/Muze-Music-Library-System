@@ -104,16 +104,6 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
         return results;
     }
 
-    private String[] splitKeywords(String searchInput) {
-        String[] keywords;
-        try {
-            keywords = searchInput.trim().split(" ");
-        } catch (NullPointerException e) {
-            keywords = new String[]{searchInput};
-        }
-        return keywords;
-    }
-
     private List<Artist> filterByTypeKeywords(Collection<Artist> artists, String type) {
         Stream<Artist> artistStream = artists.stream();
 

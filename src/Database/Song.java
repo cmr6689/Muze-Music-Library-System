@@ -6,16 +6,14 @@ import java.util.ArrayList;
 public class Song extends Item implements Serializable {
 
     private String artistId;
-    private String duration;
+    private long duration;
     private Artist artist;
-    private double rating;
-    private String guid;
+
     public Song(ArrayList<String> fields, Database db){
         super(fields.get(0));
-        guid =  fields.get(0);
         artistId =  fields.get(1);
 
-        duration =  fields.get(2);
+        duration =  Long.parseLong(fields.get(2));
         String name = fields.get(3);
         this.setName(name);
         if(name.contains("My Sweet Lord")){
@@ -25,7 +23,7 @@ public class Song extends Item implements Serializable {
         }
         artist = null;
         swapArtistName(db);
-        rating = 0;
+        this.setRating(0);
         System.out.println("Done : " + (artist ==  null));
     }
 
@@ -51,7 +49,7 @@ public class Song extends Item implements Serializable {
         return artistId;
     }
 
-    public String getDuration() {
+    public long getDuration() {
         return duration;
     }
 
@@ -61,17 +59,7 @@ public class Song extends Item implements Serializable {
     }
 
     public boolean equalsGuid(String id){
-        return this.guid.equals(id);
-    }
-
-    @Override
-    public double getRating() {
-        return rating;
-    }
-
-    @Override
-    public void setRating(double rate) {
-        rating = rate;
+        return this.getGuid().equals(id);
     }
 
     public Artist getArtist(){
