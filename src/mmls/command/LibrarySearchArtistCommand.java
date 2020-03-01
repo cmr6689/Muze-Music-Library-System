@@ -98,7 +98,6 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
 
         List<Artist> results = artistStream.filter(artist -> {
             String artistType = artist.getGenre();
-            System.out.println(artistType);
             return artistType.contains(type);
         }).collect(Collectors.toList());
 
@@ -108,7 +107,7 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
     private String[] splitKeywords(String searchInput) {
         String[] keywords;
         try {
-            keywords = searchInput.split(" ");
+            keywords = searchInput.trim().split(" ");
         } catch (NullPointerException e) {
             keywords = new String[]{searchInput};
         }
@@ -117,6 +116,7 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
 
     private List<Artist> filterByTypeKeywords(Collection<Artist> artists, String type) {
         Stream<Artist> artistStream = artists.stream();
+
 
         String[] typeKeywords = splitKeywords(type);
 
