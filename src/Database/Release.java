@@ -17,6 +17,7 @@ public class Release extends Item {
     private String guid;
 
     public Release(ArrayList<String> fields, Database db){
+        super(fields.get(0));
         guid = fields.get(0);
         artistId = fields.get(1);
         title = fields.get(2);

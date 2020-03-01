@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class CommandLine {
 
-    private static final String WELCOME_TEXT = "Welcome to the Muze Music Library System.";
+    private static final String WELCOME_TEXT = "Welcome to the Muze Music Library System. Type [exit] to close the program.";
     private static final String INPUT_PROMPT_TEXT = "Please enter a command.\nUser: ";
 
     public static void main(String ...args) {
@@ -23,10 +23,14 @@ public class CommandLine {
 
         String userInput;
         System.out.println(WELCOME_TEXT);
-        System.out.print(INPUT_PROMPT_TEXT);
-        userInput = scanner.nextLine();
-        CommandFactory request = new CommandFactory(library, database);
-        request.createCommand(userInput);
+        while (true) {
+            System.out.print(INPUT_PROMPT_TEXT);
+            userInput = scanner.nextLine();
+            if (userInput.equals("exit")) break;
+            CommandFactory request = new CommandFactory(library, database);
+            request.createCommand(userInput);
+            System.out.println();
+        }
 
 
         /*Matcher m = r.matcher(userInput);

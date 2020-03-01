@@ -20,3 +20,4 @@ src/*.iml
 .idea/libraries/bin.xml
 .idea/libraries/jdk_11_0.xml
 .idea/libraries/opencv_412.xml
+*.class
