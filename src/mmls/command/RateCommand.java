@@ -5,11 +5,12 @@ import Database.Song;
 import mmls.library.Library;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class RateCommand extends LibraryCommand implements Command {
 
-    public RateCommand(Library library, Matcher matcher, ArrayList<Item> results) {
+    public RateCommand(Library library, Matcher matcher, List<Item> results) {
         super(library, matcher, results);
     }
 

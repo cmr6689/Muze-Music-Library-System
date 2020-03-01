@@ -7,11 +7,12 @@ import mmls.library.Library;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class AddCommand extends LibraryCommand implements Command {
 
-    public AddCommand(Library library, Matcher matcher, ArrayList<Item> results) {
+    public AddCommand(Library library, Matcher matcher, List<Item> results) {
         super(library, matcher, results);
     }
 
