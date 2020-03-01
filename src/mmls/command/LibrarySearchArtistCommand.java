@@ -20,7 +20,7 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
 
     @Override
     public void executeCommand() {
-        Collection<Artist> artists = library.getArtists();
+        Collection<Artist> artists = this.library.getArtists();
         List<Artist> results;
 
         String name = matcher.group("name");
@@ -28,13 +28,13 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
         String minRating = matcher.group("minRating");
 
         if (name != null) {
-            results = filterByName(artists, name);
+            results = filterByName(artists, name.trim());
         } else {
             results = new ArrayList<>(artists);
         }
 
         if (type != null) {
-            results = filterByType(results, type);
+            results = filterByType(results, type.trim());
         }
 
         if (minRating != null) {

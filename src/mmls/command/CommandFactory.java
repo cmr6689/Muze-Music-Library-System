@@ -17,9 +17,9 @@ public class CommandFactory implements Factory {
     private static final String DATABASE_SEARCH_ARTIST_REQUEST_PATTERN = "^database search artist (?<keywords>[\\w]+[\\S ]*)$";
     private static final String DATABASE_SEARCH_SONG_REQUEST_PATTERN = "^database search song(?: -t (?<title>[\\S]+[\\S ]*?))??(?: -an (?<artistName>[\\S]+[\\S ]*?))??(?: -mind (?<minDuration>[0-9]+?))??(?: -maxd (?<maxDuration>[0-9]+?))??$";
     private static final String DATABASE_SEARCH_RELEASE_REQUEST_PATTERN = "^database search release(?: -t (?<title>[\\S]+[\\S ]*?))??(?:(?: -an (?<artistName>[\\S]+[\\S ]*?))|(?: -aid (?<artistGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?:(?: -tn (?<trackName>[\\S]+[\\S ]*?))|(?: -tid (?<trackGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?: -dr (?<minDate>[0-9]{4}-[0-9]{2}-[0-9]{2}) (?<maxDate>[0-9]{4}-[0-9]{2}-[0-9]{2}))??$";
-    private static final String LIBRARY_SEARCH_ARTIST_REQUEST_PATTERN = "^library search artist(?: -n (?<name>[\\S]+[\\S ]*?))??(?: -t (?<type>[\\S]+[\\S ]*?))??(?: -mr (?<minRating>[1-5]))??(?: -s (?<sortby>[1-3]))??$";
-    private static final String LIBRARY_SEARCH_SONG_REQUEST_PATTERN = "^library search song(?: -t (?<title>[\\S]+[\\S ]*?))??(?:(?: -an (?<artistName>[\\S]+[\\S ]*?))|(?: -aid (?<artistGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?:(?: -rt (?<releaseTitle>[\\S]+[\\S ]*?))|(?: -rid (?<releaseGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?: -mind (?<minDuration>[0-9]+?))??(?: -maxd (?<maxDuration>[0-9]+?))??(?: -mr (?<minRating>[1-5]{1}))??$";
-    private static final String LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN = "^library search release(?: -t (?<title>[\\S]+[\\S ]*?))??(?:(?: -an (?<artistName>[\\S]+[\\S ]*?))|(?: -aid (?<artistGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?:(?: -tn (?<trackName>[\\S]+[\\S ]*?))|(?: -tid (?<trackGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?: -mind (?<minDuration>[0-9]+?))??(?: -maxd (?<maxDuration>[0-9]+?))??(?: -mr (?<minRating>[1-5]{1}))??$";
+    private static final String LIBRARY_SEARCH_ARTIST_REQUEST_PATTERN = "^library search artist(?: -n (?<name>[\\S]+[\\S ]*?))??(?: -t (?<type>[\\S]+[\\S ]*?))??(?: -mr (?<minRating>[1-5]))??$";
+    private static final String LIBRARY_SEARCH_SONG_REQUEST_PATTERN = "^library search song(?: -t (?<title>[\\S]+[\\S ]*?))??(?:(?: -an (?<artistName>[\\S]+[\\S ]*?))|(?: -aid (?<artistGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?:(?: -rt (?<releaseTitle>[\\S]+[\\S ]*?))|(?: -rid (?<releaseGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?: -mind (?<minDuration>[0-9]+?))??(?: -maxd (?<maxDuration>[0-9]+?))??(?: -mr (?<minRating>[1-5]))??(?: -s (?<sortBy>[1-3]))??$";
+    private static final String LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN = "^library search release(?: -t (?<title>[\\S]+[\\S ]*?))??(?:(?: -an (?<artistName>[\\S]+[\\S ]*?))|(?: -aid (?<artistGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?:(?: -tn (?<trackName>[\\S]+[\\S ]*?))|(?: -tid (?<trackGUID>[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})))??(?: -mind (?<minDuration>[0-9]+?))??(?: -maxd (?<maxDuration>[0-9]+?))??(?: -mr (?<minRating>[1-5]))??(?: -s (?<sortBy>[1-4]))??$";
 
     // e.g. library add 19 date=02/04/2020 rating=5
     private static final String ADD_REQUEST_PATTERN =  "^library add (?<type>song|release) (?<id>[0-9]+)(?: date=(?<date>[0-9]{2}/[0-9]{2}/[0-9]{4}))?(?: rating=(?<rating>[1-5]{1}))?$";
@@ -87,6 +87,7 @@ public class CommandFactory implements Factory {
             case DATABASE_SEARCH_ARTIST_REQUEST_PATTERN:
                 break;
             case DATABASE_SEARCH_SONG_REQUEST_PATTERN:
+                command = new DatabaseSearchSongCommand(database, matcher, this);
                 break;
             case DATABASE_SEARCH_RELEASE_REQUEST_PATTERN:
                 break;
@@ -137,8 +138,12 @@ public class CommandFactory implements Factory {
     }
 
     private void printSearchResults() {
-        for (int i = 0; i < searchResults.size(); i++) {
-            System.out.println(i + ") " + searchResults.get(i));
+        if (searchResults.size() == 0) {
+            System.out.println("No results found for the given parameters.");
+        } else {
+            for (int i = 0; i < searchResults.size(); i++) {
+                System.out.println(i + ") " + searchResults.get(i));
+            }
         }
     }
 
