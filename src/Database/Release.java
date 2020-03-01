@@ -2,15 +2,20 @@ package Database;
 
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Release extends Item implements Serializable {
 
+    String datePattern = "yyyy-MM-dd";
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+
     private double rating;
     private String artistId;
     private String title;
-    private String issueDate;
+    private Date issueDate;
     private String medium;
     private Artist artist;
     private List<String> tracksID;
@@ -22,7 +27,7 @@ public class Release extends Item implements Serializable {
         guid = fields.get(0);
         artistId = fields.get(1);
         title = fields.get(2);
-        issueDate = fields.get(4);
+        issueDate = fields.get(4); //2014-09-29
         medium =  fields.get(3);
         tracksID = fields.subList(5,fields.size());
         tracks = new ArrayList<>();
