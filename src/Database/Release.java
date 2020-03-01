@@ -2,27 +2,31 @@ package Database;
 
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Release extends Item implements Serializable {
 
+
     private double rating;
     private String artistId;
     private String title;
-    private String issueDate;
+    private Date issueDate;
     private String medium;
     private Artist artist;
     private List<String> tracksID;
     private ArrayList<Song> tracks;
     private String guid;
 
-    public Release(ArrayList<String> fields, Database db){
+    public Release(ArrayList<String> fields, Database db) throws ParseException {
         super(fields.get(0));
         guid = fields.get(0);
         artistId = fields.get(1);
         title = fields.get(2);
-        issueDate = fields.get(4);
+        issueDate = new SimpleDateFormat("yyyy/MM/dd").parse(fields.get(4));
         medium =  fields.get(3);
         tracksID = fields.subList(5,fields.size());
         tracks = new ArrayList<>();
@@ -71,7 +75,7 @@ public class Release extends Item implements Serializable {
         return artist;
     }
 
-    public String getIssueDate() {
+    public Date getIssueDate() {
         return issueDate;
     }
 
