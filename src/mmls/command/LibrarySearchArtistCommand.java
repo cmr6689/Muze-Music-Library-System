@@ -2,6 +2,8 @@ package mmls.command;
 
 import Database.Artist;
 import Database.Item;
+import Results.ResultSorter;
+import Results.SortAlphabetically;
 import mmls.library.Library;
 
 import java.util.ArrayList;
@@ -41,7 +43,9 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
         }
 
         List<Item> resultList = new ArrayList<>(results);
-        commandFactory.updateSearchResults(resultList);
+        ResultSorter resultSorter = new ResultSorter();
+        List<Item> sortedResultList = resultSorter.sort(resultList, new SortAlphabetically());
+        commandFactory.updateSearchResults(sortedResultList);
     }
 
     private List<Artist> filterByName(Collection<Artist> artists, String name) {

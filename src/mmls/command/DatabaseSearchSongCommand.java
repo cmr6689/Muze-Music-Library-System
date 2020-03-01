@@ -1,8 +1,8 @@
 package mmls.command;
 
+import Database.Database;
 import Database.Item;
 import Database.Song;
-import mmls.library.Library;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,14 +11,14 @@ import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LibrarySearchSongCommand extends LibrarySearchCommand {
-    public LibrarySearchSongCommand(Library library, Matcher matcher, CommandFactory commandFactory) {
-        super(library, matcher, commandFactory);
+public class DatabaseSearchSongCommand extends DatabaseSearchCommand {
+    public DatabaseSearchSongCommand(Database database, Matcher matcher, CommandFactory commandFactory) {
+        super(database, matcher, commandFactory);
     }
 
     @Override
     public void executeCommand() {
-        Collection<Song> songs = library.getSongs();
+        Collection<Song> songs = database.getSongs();
         List<Song> results;
 
         String title = matcher.group("title");

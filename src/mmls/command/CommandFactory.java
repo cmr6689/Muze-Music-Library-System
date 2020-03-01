@@ -23,7 +23,7 @@ public class CommandFactory implements Factory {
     private static final String ADD_REQUEST_PATTERN =  "^library add (?<type>song|release) (?<id>[0-9]+)(?: date=(?<date>[0-9]{2}/[0-9]{2}/[0-9]{4}))?(?: rating=(?<rating>[1-5]{1}))?$";
 
     /// e.g. rate 14 rating=2
-    private static final String RATE_REQUEST_PATTERN =  "^rate (?<id>[0-9]+) rating=(?<rating>[1-5]{1})$";
+    private static final String RATE_REQUEST_PATTERN =  "^rate (?<id>[0-9]+) rating=(?<rating>[1-5])$";
 
     // e.g. library remove 3
     private static final String REMOVE_REQUEST_PATTERN =  "^library remove (?<id>[0-9]+)$";
@@ -128,7 +128,13 @@ public class CommandFactory implements Factory {
 
     public void updateSearchResults(List<Item> searchResults) {
         this.searchResults = searchResults;
-        System.out.println(searchResults);
+        printSearchResults();
+    }
+
+    private void printSearchResults() {
+        for (int i = 0; i < searchResults.size(); i++) {
+            System.out.println(i + ") " + searchResults.get(i));
+        }
     }
 
 }

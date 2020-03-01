@@ -1,13 +1,13 @@
 package Results;
 
-import java.util.ArrayList;
+import Database.Item;
 
-public interface ResultSorter {
-    //Updated
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    void sortAlphabetically(ArrayList<String> updatedList);
-    void sortRating(int userRating);
-
-
-
+public class ResultSorter {
+    public List<Item> sort(List<Item> items, Comparator<Item> strategy) {
+        return items.stream().sorted(strategy).collect(Collectors.toList());
+    }
 }

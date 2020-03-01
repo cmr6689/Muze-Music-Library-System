@@ -6,28 +6,13 @@ import mmls.library.Library;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public abstract class LibrarySearchCommand implements Command {
+public abstract class LibrarySearchCommand extends SearchCommand {
     protected Library library;
     protected Matcher matcher;
     protected CommandFactory commandFactory;
 
     public LibrarySearchCommand(Library library, Matcher matcher, CommandFactory commandFactory) {
+        super(matcher, commandFactory);
         this.library = library;
-        this.matcher = matcher;
-        this.commandFactory = commandFactory;
-    }
-
-    protected void notifyCommandFactory(List<Item> searchResults) {
-        commandFactory.updateSearchResults(searchResults);
-    }
-
-    protected String[] splitKeywords(String searchInput) {
-        String[] keywords;
-        try {
-            keywords = searchInput.trim().split(" ");
-        } catch (NullPointerException e) {
-            keywords = new String[]{searchInput};
-        }
-        return keywords;
     }
 }
