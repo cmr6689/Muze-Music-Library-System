@@ -15,13 +15,13 @@ public class Library implements Serializable {
     private Map<String, Song> songs;
     private Map<String, Release> releases;
     private Map<String, Artist> artists;
-    private HashMap<String,Date> aqqDB;
+    private HashMap<String,Date> acquisitionDates;
     public Library() {
 
         songs = new HashMap<>();
         releases = new HashMap<>();
         artists = new HashMap<>();
-        aqqDB =  new HashMap<>();
+        acquisitionDates =  new HashMap<>();
     }
 
     private void addSongDate(Song song, Date date){
@@ -116,12 +116,12 @@ public class Library implements Serializable {
         return artists.values();
     }
 
-    public Date getAqqDate(String id){
-        return aqqDB.get(id);
+    public Date getAcquisitionDate(String id){
+        return acquisitionDates.get(id);
     }
 
     private void addDate(String id, Date date){
-        aqqDB.put(id,date);
+        acquisitionDates.put(id,date);
     }
 
 }

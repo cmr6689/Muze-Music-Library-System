@@ -1,13 +1,11 @@
 package Database;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Song extends Item implements Serializable {
+public class Song extends Item {
 
     private String artistId;
     private String duration;
-    private String title;
     private Artist artist;
     private double rating;
     private String guid;
@@ -17,8 +15,9 @@ public class Song extends Item implements Serializable {
         artistId =  fields.get(1);
 
         duration =  fields.get(2);
-        title = fields.get(3);
-        if(title.contains("My Sweet Lord")){
+        String name = fields.get(3);
+        this.setName(name);
+        if(name.contains("My Sweet Lord")){
             for(String s: fields){
                 System.out.println(s);
             }
@@ -31,10 +30,15 @@ public class Song extends Item implements Serializable {
 
     private void swapArtistName(Database db){
 
-
+        boolean debug = artistId.equals("89ad4ac3-39f7-470e-963a-56509c546377");
 
         for(Artist a: db.getArtists()){
-
+            System.out.println("Artist is: " + a.getGuid());
+            if(debug){
+                System.out.println("BERRY");
+                System.out.println(a.getGuid().equals("89ad4ac3-39f7-470e-963a-56509c546377"));
+                System.out.println("Name: " +  this.getName());
+            }
             if(a.equalsGuid(artistId)){
                 ArrayList<String> vals =  new ArrayList<>();
                 vals.add(a.getGuid());
@@ -44,7 +48,7 @@ public class Song extends Item implements Serializable {
                 }
                 Artist temp =  new Artist(vals);
                 artist = temp;
-
+                System.out.println("GUCCI " + temp);
                 break;
             }
         }
@@ -59,13 +63,9 @@ public class Song extends Item implements Serializable {
         return duration;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     @Override
     public String toString(){
-        return title + " by " + artist;
+        return this.getName() + " by " + artist;
     }
 
     public boolean equalsGuid(String id){
