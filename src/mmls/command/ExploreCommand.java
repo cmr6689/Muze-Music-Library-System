@@ -30,15 +30,15 @@ public class ExploreCommand extends LibraryCommand implements Command {
     @Override
     public void executeCommand() {
         if (items.size() <= 0) {
-            for (Artist artist : database.getArtists()) {
+            for (Artist artist : library.getArtists()) {
                 if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(artist.getGuid())) {
                     System.out.println("\n" + artist.getName() + " Songs:");
-                    for (Song song : database.getSongs()) {
+                    for (Song song : library.getSongs()) {
                         if (song.getArtist().getGuid().equals(artist.getGuid())) System.out.println(song.toString());
                     }
                     System.out.println();
                     System.out.println(artist.getName() + " Releases: (releases may be explored)");
-                    for (Release release : database.getReleases()) {
+                    for (Release release : library.getReleases()) {
                         if (release.getArtist().getGuid().equals(artist.getGuid())) {
                             System.out.println(release.toString());
                             items.add(release);
@@ -48,7 +48,7 @@ public class ExploreCommand extends LibraryCommand implements Command {
                 }
             }
         } else {
-            for (Release release : database.getReleases()) {
+            for (Release release : library.getReleases()) {
                 if (items.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(release.getGuid())) {
                     System.out.println(release.getTitle() + " Tracks");
                     for (int i = 0; i < release.getTracks().size(); i++) {
