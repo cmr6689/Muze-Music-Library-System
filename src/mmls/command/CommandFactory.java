@@ -2,6 +2,7 @@ package mmls.command;
 
 import Database.Database;
 import Database.Song;
+import Database.Item;
 import mmls.library.Library;
 import Database.Item;
 
@@ -81,6 +82,8 @@ public class CommandFactory implements Factory {
 //                return new HelpCommand(req[0]);
 //        }
         Matcher matcher = getMatcherForInput(request);
+        //TODO: Change items array list to search results list
+        ArrayList<Item> items = new ArrayList<>();
         Command command = null;
         switch (matcher.pattern().pattern()) {
             case DATABASE_SEARCH_ARTIST_REQUEST_PATTERN:
@@ -97,11 +100,11 @@ public class CommandFactory implements Factory {
             case LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN:
                 break;
             case ADD_REQUEST_PATTERN:
-                break;
+                command = new AddCommand(library, matcher, items);
             case RATE_REQUEST_PATTERN:
-                break;
+                command = new RateCommand(library, matcher, items);
             case REMOVE_REQUEST_PATTERN:
-                command = new RemoveCommand(library, matcher);
+                command = new RemoveCommand(library, matcher, items);
             case EXPLORE_REQUEST_PATTERN:
                 break;
             case BACK_REQUEST_PATTERN:
