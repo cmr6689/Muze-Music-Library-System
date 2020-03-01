@@ -46,9 +46,7 @@ public class ParserTest {
         System.out.println(newLibrary);
         System.out.println(newLibrary.getSongs().size());
         System.out.println(newLibrary.getSongs().size() ==  lib.getSongs().size());
-        System.out.println("a");
 
-        System.out.println("Done");
 
     }
 

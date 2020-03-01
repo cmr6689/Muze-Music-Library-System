@@ -49,25 +49,6 @@ public class Library implements Serializable {
         addSongDate(song,date);
     }
 
-//    private void removeSongID(String id, Artist artist){
-//        for(Song s: songs){
-//            if(s.equalsGuid(id)){
-//                songs.remove(s);
-//                for(Artist a : artists){
-//                    if(a.equalsGuid(artist.getGuid())){
-//                        artists.remove(a);
-//                        break;
-//                    }
-//                }
-//                break;
-//            }
-//        }
-//    }
-
-//    public void removeSong(Song song){
-//        String guid = song.getGuid();
-//        songs.remove(guid);
-//    }
 
     public boolean removeSong(String guid){
         boolean removed = false;

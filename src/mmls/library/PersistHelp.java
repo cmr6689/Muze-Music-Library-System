@@ -25,11 +25,11 @@ public class PersistHelp implements Serializable {
 
     public  Library deserialize(){
         try {
-            // Reading the object from a file
+
             FileInputStream file = new FileInputStream(name);
             ObjectInputStream in = new ObjectInputStream(file);
 
-            // Method for deserialization of object
+
             Library returned = (Library) in.readObject();
 
             in.close();
