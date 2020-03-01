@@ -2,7 +2,6 @@ package mmls.command;
 
 import Database.Item;
 import mmls.library.Library;
-import mmls.library.LibraryItem;
 
 import java.util.List;
 import java.util.regex.Matcher;

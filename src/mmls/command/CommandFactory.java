@@ -3,6 +3,7 @@ package mmls.command;
 import Database.Database;
 import Database.Song;
 import Database.Item;
+import Database.Artist;
 import mmls.library.Library;
 import Database.Item;
 
@@ -130,7 +131,6 @@ public class CommandFactory implements Factory {
 
     public void updateSearchResults(List<Item> searchResults) {
         this.searchResults = searchResults;
-        System.out.println(searchResults.size());
     }
 
 }
