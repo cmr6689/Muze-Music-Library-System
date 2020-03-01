@@ -4,13 +4,14 @@ import Database.Artist;
 import Database.Release;
 import Database.Song;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Library {
+public class Library implements Serializable {
     private Map<String, Song> songs;
     private Map<String, Release> releases;
     private Map<String, Artist> artists;
@@ -26,7 +27,7 @@ public class Library {
     private void addSongDate(Song song, Date date){
         String songGuid = song.getGuid();
         Artist artist = song.getArtist();
-        String artistGuid = artist.getGuid();
+        String artistGuid = song.getArtistId();
         if(!songs.containsKey(songGuid)) {
             songs.put(songGuid, song);
 

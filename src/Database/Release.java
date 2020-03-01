@@ -1,10 +1,11 @@
 package Database;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Release extends Item {
+public class Release extends Item implements Serializable {
 
     private double rating;
     private String artistId;

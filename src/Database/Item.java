@@ -1,6 +1,8 @@
 package Database;
 
-public abstract class Item implements RatableObject {
+import java.io.Serializable;
+
+public abstract class Item implements RatableObject, Serializable {
     private String guid;
 
     public Item(String id){

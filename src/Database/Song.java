@@ -1,8 +1,9 @@
 package Database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Song extends Item {
+public class Song extends Item implements Serializable {
 
     private String artistId;
     private String duration;
@@ -30,15 +31,10 @@ public class Song extends Item {
 
     private void swapArtistName(Database db){
 
-        boolean debug = artistId.equals("89ad4ac3-39f7-470e-963a-56509c546377");
+
 
         for(Artist a: db.getArtists()){
-            System.out.println("Artist is: " + a.getGuid());
-            if(debug){
-                System.out.println("BERRY");
-                System.out.println(a.getGuid().equals("89ad4ac3-39f7-470e-963a-56509c546377"));
-                System.out.println("Name: " +  title);
-            }
+
             if(a.equalsGuid(artistId)){
                 ArrayList<String> vals =  new ArrayList<>();
                 vals.add(a.getGuid());
@@ -48,7 +44,7 @@ public class Song extends Item {
                 }
                 Artist temp =  new Artist(vals);
                 artist = temp;
-                System.out.println("GUCCI " + temp);
+
                 break;
             }
         }

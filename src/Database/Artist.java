@@ -1,8 +1,9 @@
 package Database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Artist extends Item {
+public class Artist extends Item implements Serializable {
     private String name;
     private String genre;
     private double rating;
@@ -20,9 +21,7 @@ public class Artist extends Item {
         catch (IndexOutOfBoundsException ioe){
             genre =  null;
         }
-        if(guid.equals("89ad4ac3-39f7-470e-963a-56509c546377")){
-            System.out.println("CONE + " +  getGenre() + " " + getGuid() + " " +  getName());
-        }
+
     }
 
     public boolean equalsGuid(String id){
