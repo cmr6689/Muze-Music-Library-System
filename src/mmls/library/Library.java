@@ -30,7 +30,7 @@ public class Library implements Serializable {
         String artistGuid = song.getArtistId();
         if(!songs.containsKey(songGuid)) {
             songs.put(songGuid, song);
-
+            addDate(songGuid,date);
             if (!artists.containsKey(artistGuid)) {
                 artists.put(artistGuid, artist);
             }
