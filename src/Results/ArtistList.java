@@ -1,6 +1,10 @@
 package Results;
 
+import Database.Artist;
+import mmls.library.Library;
+
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class ArtistList implements ResultSorter {
 
@@ -13,7 +17,17 @@ public class ArtistList implements ResultSorter {
      * from the user's Library
      * Example: [twenty one pilots, Rolling Stones]
      */
-    public void createArtistNameList() {
+    public ArrayList<String> createArtistNameList() {
+        ArrayList<String> ArtistNames = new ArrayList<>();
+
+        Library library = new Library();
+        Collection<Artist> artists = library.getArtists();
+        for(Artist artist : artists) {
+            ArtistNames.add(artist.getName());
+
+        }
+
+        return ArtistNames;
 
     }
 
@@ -22,7 +36,21 @@ public class ArtistList implements ResultSorter {
      * with their associated RATING given by the user from the user's library.
      * Example: [twenty one pilots-3, Rolling Stones-4]
      */
-    public void createArtistRatingsList() {
+    public ArrayList<String> createArtistRatingsList() {
+        ArrayList<String> ArtistRatings = new ArrayList<>();
+
+        Library library = new Library();
+        Collection<Artist> artists = library.getArtists();
+        for(Artist artist : artists) {
+            String current = " ";
+            String artistname = artist.getName();
+            String artistRating = Double.toString(artist.getRating());
+            current = (artistname + "-" + artistRating);
+            ArtistRatings.add(current);
+
+        }
+
+        return ArtistRatings;
 
     }
 
@@ -31,7 +59,19 @@ public class ArtistList implements ResultSorter {
      * with their associated TYPE given by the user from the user's library.
      * Example: [twenty one pilots-Pop, Rolling Stones-Rock]
      */
-    public void createArtistTypeList() {
+    public ArrayList<String> createArtistTypeList() {
+        ArrayList<String> artistType = new ArrayList<>();
+        Library library = new Library();
+        Collection<Artist> artists = library.getArtists();
+        for(Artist artist : artists) {
+            String current = " ";
+            String artistName = artist.getName();
+            String artistGenre = artist.getGenre();
+            current = (artistName + "-" + artistGenre);
+            artistType.add(current);
+        }
+
+        return artistType;
 
     }
 
@@ -41,14 +81,14 @@ public class ArtistList implements ResultSorter {
      * Example: "twenty one" will find "twenty one pilots"
      * Uses: createArtistNameList()
      */
-    private void sortArtistName(ArrayList<String> artists, String words) {
+    private void sortArtistName(String words) {
         //Create a List of Artist Names First
-        createArtistNameList();
+        ArrayList<String> artistNames = createArtistNameList();
 
         ArrayList<String> updatedArtists = new ArrayList<>();
-        int length = artists.size();
+        int length = artistNames.size();
         for(int index = 0; index < length; index++) {
-            String artist = artists.get(index);
+            String artist = artistNames.get(index);
             if(artist.contains(words)) {
                 updatedArtists.add(artist);
             }
@@ -63,14 +103,14 @@ public class ArtistList implements ResultSorter {
      * Uses: createArtistRatingsList()
      */
     @Override
-    public void sortRating(ArrayList<String> arrayList, int userRating) {
+    public void sortRating(int userRating) {
         //Create the ArtistRatingsList First:
-        createArtistRatingsList();
+        ArrayList<String> ArtistRatings = createArtistRatingsList();
 
         ArrayList<String> updatedList = new ArrayList<>();
-        int length = arrayList.size();
+        int length = ArtistRatings.size();
         for(int index = 0; index < length; index++) {
-            String artistInfo = arrayList.get(index);
+            String artistInfo = ArtistRatings.get(index);
             String[] info = artistInfo.split("-");
             String rate = info[1];
             int Rating = Integer.getInteger(rate);
@@ -79,18 +119,19 @@ public class ArtistList implements ResultSorter {
             }
 
         }
+
         sortAlphabetically(updatedList);
 
     }
 
-    private void sortArtistType(ArrayList<String> artistList, String Type) {
+    private void sortArtistType(String Type) {
         //Create The ArtistType List First:
-        createArtistTypeList();
+        ArrayList<String> artistGenre = createArtistTypeList();
 
         ArrayList<String> updatedList = new ArrayList<>();
-        int length = artistList.size();
+        int length = artistGenre.size();
         for(int index = 0; index < length; index++) {
-            String artist = artistList.get(index);
+            String artist = artistGenre.get(index);
             if(artist.contains(Type)) {
                 String[] artistInfo = artist.split("-");
                 updatedList.add(artistInfo[0]);
@@ -110,20 +151,5 @@ public class ArtistList implements ResultSorter {
         System.out.println(updatedList);
 
     }
-
-
-    public static void main(String args[]) {
-        ArrayList<String> artists = new ArrayList<>();
-        artists.add("Luke Combs");
-        artists.add("JuiceWRLD");
-        artists.add("Lil Tecca");
-        artists.add("XXXTENTACION");
-        artists.add("Luke Bryan");
-        artists.add("Kane Brown");
-        artists.add("Lil Mosey");
-        artists.add("Lil Pump");
-        artists.add("Lil Tjay");
-        ArtistList artistList = new ArtistList();
-        artistList.sortArtistName(artists, "Lil");
-    }
+    
 }
