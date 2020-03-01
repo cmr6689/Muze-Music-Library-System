@@ -1,6 +1,7 @@
 package mmls.command;
 
 import Database.Item;
+import Database.Release;
 import Database.Song;
 import mmls.library.Library;
 import mmls.library.LibraryItem;
@@ -20,9 +21,18 @@ public class RemoveCommand implements Command {
     }
 
     public void executeCommand() {
+        boolean found = false;
         for (Song song : library.getSongs()) {
             if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
                 library.removeItem(song.getGuid());
+                found = true;
+            }
+        }
+        if (!found) {
+            for (Release release : library.getReleases()) {
+                if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
+                    library.removeItem(release.getGuid());
+                }
             }
         }
     }

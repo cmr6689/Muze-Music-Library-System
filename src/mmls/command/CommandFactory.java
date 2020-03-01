@@ -99,7 +99,7 @@ public class CommandFactory implements Factory {
             case ADD_REQUEST_PATTERN:
                 break;
             case RATE_REQUEST_PATTERN:
-                break;
+                command = new RateCommand(library, matcher, items);
             case REMOVE_REQUEST_PATTERN:
                 command = new RemoveCommand(library, matcher, items);
             case EXPLORE_REQUEST_PATTERN:
