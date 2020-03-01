@@ -1,6 +1,7 @@
 package mmls.command;
 
 import Database.Artist;
+import Database.Database;
 import Database.Item;
 import mmls.library.Library;
 
@@ -10,8 +11,8 @@ import java.util.regex.Matcher;
 
 public class ExploreCommand extends LibraryCommand implements Command {
 
-    public ExploreCommand(Library library, Matcher matcher, List<Item> results) {
-        super(library, matcher, results);
+    public ExploreCommand(Library library, Database database, Matcher matcher, List<Item> results) {
+        super(library, database, matcher, results);
     }
 
     @Override
