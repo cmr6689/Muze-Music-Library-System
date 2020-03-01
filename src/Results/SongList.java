@@ -28,18 +28,18 @@ public class SongList implements ResultSorter {
 
     private ArrayList<String> createSongNames() {
         ArrayList<String> SongNames = new ArrayList<>();
-        Library library = new Library();
-        Collection<Song> songs = library.getSongs();
-        for (Song song : songs) {
-            String current = " ";
-            //Add Song Title
-            String songTitle = song.getTitle();
-            //Add Rating
-            String Rating = Double.toString(song.getRating());
-            //Add Acquisition
-            //TODO Make sure to add this once Song has it
-
-        }
+//        Library library = new Library();
+//        Collection<Song> songs = library.getSongs();
+//        for (Song song : songs) {
+//            String current = " ";
+//            //Add Song Title
+//            String songTitle = song.getTitle();
+//            //Add Rating
+//            String Rating = Double.toString(song.getRating());
+//            //Add Acquisition
+//            //TODO Make sure to add this once Song has it
+//
+//        }
 
 
         return SongNames;
