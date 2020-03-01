@@ -4,10 +4,9 @@ package Database;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Release implements RatableObject {
+public class Release extends Item {
 
     private double rating;
-    private String id;
     private String artistId;
     private String title;
     private String issueDate;
@@ -15,17 +14,18 @@ public class Release implements RatableObject {
     private Artist artist;
     private List<String> tracksID;
     private ArrayList<Song> tracks;
+    private String guid;
 
     public Release(ArrayList<String> fields, Database db){
-        id = fields.get(0);
+        guid = fields.get(0);
         artistId = fields.get(1);
         title = fields.get(2);
         issueDate = fields.get(4);
         medium =  fields.get(3);
         tracksID = fields.subList(5,fields.size());
         tracks = new ArrayList<>();
-        swapTracks(db.getSongs());
-        swapArtist(db.getArtists());
+        swapTracks(new ArrayList<>(db.getSongs()));
+        swapArtist(new ArrayList<>(db.getArtists()));
         rating = 0;
     }
 
@@ -41,7 +41,7 @@ public class Release implements RatableObject {
 
     private void swapArtist(ArrayList<Artist> artists){
         for(Artist a: artists){
-            if(a.equalsID(artistId)){
+            if(a.equalsGuid(artistId)){
                 artist = a;
                 break;
             }
@@ -50,15 +50,11 @@ public class Release implements RatableObject {
     private void swapTracks(ArrayList<Song> songs){
         for(String s: tracksID){
             for(Song song: songs){
-                if(song.equalsGUID(s)){
+                if(song.equalsGuid(s)){
                     tracks.add(song);
                 }
             }
         }
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getArtistId() {
@@ -72,8 +68,6 @@ public class Release implements RatableObject {
     public Artist getArtist(){
         return artist;
     }
-
-
 
     public String getIssueDate() {
         return issueDate;

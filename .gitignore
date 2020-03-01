@@ -1,10 +1,22 @@
 # IntelliJ #
 ############
-.idea/
+.idea_old/*
 *.iml
 *.DS_Store
 .DS_Store
 *.DS
 .DS_Store
 src/.DS_Store
-/.idea/
+/.idea_old/
+/.idea_old/*
+src/*.iml
+/src/*.iml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/libraries/bin.xml
+.idea/libraries/jdk_11_0.xml
+.idea/libraries/opencv_412.xml
