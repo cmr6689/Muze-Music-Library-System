@@ -16,6 +16,7 @@ public abstract class LibraryCommand implements Command {
 
     public LibraryCommand(Library library, Database database, Matcher matcher, List<Item> results) {
         this.library = library;
+        this.database = database;
         this.matcher = matcher;
         this.results = results;
     }

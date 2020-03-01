@@ -21,7 +21,8 @@ public class AddCommand extends LibraryCommand implements Command {
     public void executeCommand() {
         if (matcher.group("type").equals("song")) {
             for (Song song : database.getSongs()) {
-                if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+                if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+                    System.out.println("SONG FOUND");
                     if (matcher.group("date") != null) {
                         Date date = new Date(matcher.group("date"));
                         library.addSong(song, date);
@@ -35,7 +36,7 @@ public class AddCommand extends LibraryCommand implements Command {
             }
         } else if (matcher.group("type").equals("release")) {
             for (Release release : database.getReleases()) {
-                if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
+                if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(release.getGuid())) {
                     if (matcher.group("date") != null) {
                         Date date = new Date(matcher.group("date"));
                         library.addRelease(release, date);

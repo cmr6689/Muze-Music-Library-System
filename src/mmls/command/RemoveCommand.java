@@ -20,14 +20,14 @@ public class RemoveCommand extends LibraryCommand implements Command {
     public void executeCommand() {
         boolean found = false;
         for (Song song : library.getSongs()) {
-            if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+            if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(song.getGuid())) {
                 library.removeSong(song.getGuid());
                 found = true;
             }
         }
         if (!found) {
             for (Release release : library.getReleases()) {
-                if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
+                if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(release.getGuid())) {
                     library.removeRelease(release.getGuid());
                 }
             }
