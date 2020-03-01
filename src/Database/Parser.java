@@ -9,14 +9,32 @@ import java.util.ArrayList;
 
 public class Parser {
 
+
     private String artistFile;
     private String songFile;
     private String releaseFile;
 
-    public Parser(String s1, String s2, String s3){
-        artistFile =  s1;
-        songFile = s2;
-        releaseFile = s3;
+    public Parser(){
+        String cwd = ("./files/");
+        artistFile = cwd+"artists.csv";
+        songFile =  cwd+"songs.csv";
+        releaseFile =  cwd+"releases.csv";
+    }
+
+    public void runParse(Database db) {
+
+
+        try {
+            parse(db);
+        } catch (IOException ioe) {
+            System.out.println("There were issues Loading files: " + ioe);
+            System.out.println("Now displaying files found in aimed current working director (//files)");
+            System.out.println("Did you put your files in the /files?");
+            File f = new File("./files");
+            for (File i : f.listFiles()) {
+                System.out.println(i.getName());
+            }
+        }
     }
 
     private BufferedReader createReader(String name) throws IOException{
