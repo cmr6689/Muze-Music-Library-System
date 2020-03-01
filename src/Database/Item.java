@@ -1,8 +1,9 @@
 package Database;
 
-public abstract class Item implements RatableObject {
+public abstract class Item {
     private String guid;
     private String name;
+    private double rating;
 
     public Item(String id){
         guid = id;
@@ -18,5 +19,13 @@ public abstract class Item implements RatableObject {
 
     protected void setName(String name) {
         this.name = name;
+    }
+
+    public double getRating() {
+        return this.rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }
