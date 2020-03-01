@@ -14,6 +14,7 @@ public class Release extends Item {
     private Artist artist;
     private List<String> tracksID;
     private ArrayList<Song> tracks;
+    private String guid;
 
     public Release(ArrayList<String> fields, Database db){
         guid = fields.get(0);
@@ -23,8 +24,8 @@ public class Release extends Item {
         medium =  fields.get(3);
         tracksID = fields.subList(5,fields.size());
         tracks = new ArrayList<>();
-        swapTracks(db.getSongs());
-        swapArtist(db.getArtists());
+        swapTracks(new ArrayList<>(db.getSongs()));
+        swapArtist(new ArrayList<>(db.getArtists()));
         rating = 0;
     }
 

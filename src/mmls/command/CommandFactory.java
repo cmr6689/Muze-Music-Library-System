@@ -102,10 +102,11 @@ public class CommandFactory implements Factory {
             case BACK_REQUEST_PATTERN:
                 break;
             case HELP_REQUEST_PATTERN:
-                break;
+                new HelpCommand("help").executeCommand();
             case LIBRARY_LIST_REQUEST_PATTERN:
                 break;
         }
+        return null;
     }
 
     private Matcher getMatcherForInput(String request) {

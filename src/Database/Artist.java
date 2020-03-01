@@ -6,6 +6,7 @@ public class Artist extends Item {
     private String name;
     private String genre;
     private double rating;
+    private String guid;
 
     public Artist(ArrayList<String> fields){
         guid  = fields.get(0);

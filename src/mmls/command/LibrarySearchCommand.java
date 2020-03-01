@@ -5,7 +5,7 @@ import mmls.library.LibraryItem;
 
 public class LibrarySearchCommand extends LibraryCommand {
     public LibrarySearchCommand(Library library, LibraryItem targetItem) {
-        super(library, targetItem);
+        super(library, null);
     }
 
     @Override

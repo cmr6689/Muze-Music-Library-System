@@ -9,6 +9,7 @@ public class Song extends Item {
     private String title;
     private Artist artist;
     private double rating;
+    private String guid;
     public Song(ArrayList<String> fields, Database db){
         guid =  fields.get(0);
         artistId =  fields.get(1);
