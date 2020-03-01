@@ -3,9 +3,10 @@ package Results;
 import java.util.ArrayList;
 
 public interface ResultSorter {
+    //Updated
 
     void sortAlphabetically(ArrayList<String> updatedList);
-    void sortRating(ArrayList<String> arrayList, int userRating);
+    void sortRating(int userRating);
 
 
 
