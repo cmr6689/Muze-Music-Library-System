@@ -7,9 +7,7 @@ import java.util.ArrayList;
 public class HelpCommand implements Command {
     private String command;
 
-    public HelpCommand(String command) {
-        this.command = command;
-    }
+    public HelpCommand() {}
 
     @Override
     public void executeCommand() {

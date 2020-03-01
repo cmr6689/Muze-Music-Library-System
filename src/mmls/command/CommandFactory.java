@@ -102,7 +102,7 @@ public class CommandFactory implements Factory {
             case BACK_REQUEST_PATTERN:
                 break;
             case HELP_REQUEST_PATTERN:
-                new HelpCommand("help").executeCommand();
+                new HelpCommand().executeCommand();
             case LIBRARY_LIST_REQUEST_PATTERN:
                 break;
         }
