@@ -1,6 +1,7 @@
 package mmls.command;
 
 import Database.Database;
+import Database.Song;
 import mmls.library.Library;
 
 import java.util.ArrayList;
@@ -78,6 +79,7 @@ public class CommandFactory implements Factory {
 //                return new HelpCommand(req[0]);
 //        }
         Matcher matcher = getMatcherForInput(request);
+        Command command = null;
         switch (matcher.pattern().pattern()) {
             case DATABASE_SEARCH_ARTIST_REQUEST_PATTERN:
                 break;
@@ -96,17 +98,18 @@ public class CommandFactory implements Factory {
             case RATE_REQUEST_PATTERN:
                 break;
             case REMOVE_REQUEST_PATTERN:
-                break;
+                command = new RemoveCommand(library, matcher);
             case EXPLORE_REQUEST_PATTERN:
                 break;
             case BACK_REQUEST_PATTERN:
                 break;
             case HELP_REQUEST_PATTERN:
-                new HelpCommand().executeCommand();
+                command = new HelpCommand();
             case LIBRARY_LIST_REQUEST_PATTERN:
                 break;
         }
-        return null;
+        if (command != null) command.executeCommand();
+        return command;
     }
 
     private Matcher getMatcherForInput(String request) {
