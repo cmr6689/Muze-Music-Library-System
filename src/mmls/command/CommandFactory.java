@@ -131,6 +131,7 @@ public class CommandFactory implements Factory {
 
     public void updateSearchResults(List<Item> searchResults) {
         this.searchResults = searchResults;
+        System.out.println(searchResults.size());
     }
 
 }
