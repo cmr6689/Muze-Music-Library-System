@@ -24,14 +24,14 @@ public class RemoveCommand implements Command {
         boolean found = false;
         for (Song song : library.getSongs()) {
             if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
-                library.removeItem(song.getGuid());
+                library.removeSong(song.getGuid());
                 found = true;
             }
         }
         if (!found) {
             for (Release release : library.getReleases()) {
                 if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
-                    library.removeItem(release.getGuid());
+                    library.removeRelease(release.getGuid());
                 }
             }
         }

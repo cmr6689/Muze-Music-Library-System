@@ -97,7 +97,7 @@ public class CommandFactory implements Factory {
             case LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN:
                 break;
             case ADD_REQUEST_PATTERN:
-                break;
+                command = new AddCommand(library, matcher, items);
             case RATE_REQUEST_PATTERN:
                 command = new RateCommand(library, matcher, items);
             case REMOVE_REQUEST_PATTERN:
