@@ -2,7 +2,7 @@ package mmls.library;
 
 import java.io.*;
 
-public class PersistHelp {
+public class PersistHelp implements Serializable {
     String name;
     public PersistHelp(){
         name = "LibPersist";
@@ -41,5 +41,8 @@ public class PersistHelp {
         }
         return null;
     }
-
+    public String getName()
+    {
+        return name;
+    }
 }
