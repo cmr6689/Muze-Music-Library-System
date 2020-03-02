@@ -8,7 +8,7 @@ import Database.Release;
 import java.util.Comparator;
 
 public class SortByReleaseDate implements Comparator<Item> {
-    //Sort by the release Date
+    //Sort by the release Date.
 
 
     @Override
