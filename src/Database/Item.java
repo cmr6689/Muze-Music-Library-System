@@ -7,7 +7,8 @@ public abstract class Item implements Serializable {
     private String guid;
     private String name;
     private double rating;
-    private Date date;
+    private Date Releasedate;
+    private Date AquisitionDate;
 
 
     public Item(String id){
@@ -34,12 +35,22 @@ public abstract class Item implements Serializable {
         this.rating = rating;
     }
 
-    private void setDate(Date date) {
-        this.date = date;
+    private void setReleaseDate(Date date) {
+        this.Releasedate = date;
     }
 
-    public Date getDate() {
-        return this.date;
+    public Date getReleaseDate() {
+        return this.Releasedate;
     }
+
+    private void setAquisitionDate(Date date) {
+        this.AquisitionDate = date;
+    }
+
+    public Date getAquisitionDate() {
+        return this.AquisitionDate;
+    }
+
+
 }
 
