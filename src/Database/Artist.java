@@ -9,7 +9,6 @@ import java.util.ArrayList;
  * @author Jarred Moyer, Shane Burke, Cameron Riu
  */
 public class Artist extends Item implements Serializable {
-    private String name;
     private String genre;
     private double rating;
     private String guid;
@@ -22,7 +21,7 @@ public class Artist extends Item implements Serializable {
         super(fields.get(0));
         guid  = fields.get(0);
 
-        name =  fields.get(1);
+        setName(fields.get(1));
         rating = 0;
         try{
             genre =  fields.get(2);
@@ -43,20 +42,12 @@ public class Artist extends Item implements Serializable {
     }
 
     /**
-     * Getter for the name of the artist
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * Getter for the genre/type of the artist
      * @return genre
      */
     public String getGenre() {
         if(!hasGenre()){
-            return "No genre";
+            return "None";
         }
         else{
             return genre;
@@ -77,7 +68,11 @@ public class Artist extends Item implements Serializable {
      */
     @Override
     public String toString(){
-        return  name;
+        String result = getName();
+        if (hasGenre()) {
+            result += " (" + getGenre() + ")";
+        }
+        return result;
     }
 
     /**

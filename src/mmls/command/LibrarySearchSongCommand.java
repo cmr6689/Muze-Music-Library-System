@@ -48,7 +48,8 @@ public class LibrarySearchSongCommand extends LibrarySearchCommand {
             ArtistNameFilter<Song> artistNameFilter = new ArtistNameFilter<>();
             results = artistNameFilter.filter(results, artistName.trim());
         } else if (artistGuid != null) {
-            results = filterByArtistGuid(results, artistGuid.trim());
+            ArtistGuidFilter<Song> artistGuidFilter = new ArtistGuidFilter<>();
+            results = artistGuidFilter.filter(results, artistGuid);
         }
 
         if (releaseTitle != null) {
@@ -85,15 +86,6 @@ public class LibrarySearchSongCommand extends LibrarySearchCommand {
         List<Item> sortedResults = resultSorter.sort(resultList, sortStrategy);
 
         notifyCommandFactory(sortedResults);
-    }
-
-
-    private List<Song> filterByArtistGuid(Collection<Song> songs, String artistGuid) {
-        Stream<Song> songStream = songs.stream();
-        List<Song> results = songStream.filter(song -> {
-            return song.getArtist().getGuid().contains(artistGuid);
-        }).collect(Collectors.toList());
-        return results;
     }
 
     private List<Release> getTitleFilteredReleases(String releaseTitle) {
@@ -139,41 +131,4 @@ public class LibrarySearchSongCommand extends LibrarySearchCommand {
         return results;
     }
 
-//    private List<Song> filterByReleaseTitle(Collection<Song> songs, String title) {
-//        List<Song> results = filterByExactReleaseTitle(songs, title);
-//
-//        if (results.size() == 0) {
-//            results = filterByReleaseTitleKeywords(songs, title);
-//        }
-//
-//        return results;
-//    }
-//
-//    private List<Song> filterByExactReleaseTitle(Collection<Song> songs, String title) {
-//        Stream<Song> songStream = songs.stream();
-//
-//        List<Song> results = songStream.filter(song -> {
-//            return songTitle.contains(title);
-//        }).collect(Collectors.toList());
-//
-//        return results;
-//    }
-//
-//    private List<Song> filterByReleaseTitleKeywords(Collection<Song> songs, String title) {
-//        Stream<Song> songStream = songs.stream();
-//
-//        String[] titleKeywords = splitKeywords(title);
-//
-//        List<Song> results = songStream.filter(song -> {
-//            String songTitle = song.getName();
-//            for (String keyword : titleKeywords) {
-//                if (songTitle.contains(keyword)) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        }).collect(Collectors.toList());
-//
-//        return results;
-//    }
 }

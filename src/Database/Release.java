@@ -17,7 +17,6 @@ public class Release extends Item implements Serializable, Audio {
     private long duration;
     private double rating;
     private String artistId;
-    private String title;
     private Date issueDate;
     private String medium;
     private Artist artist;
@@ -60,7 +59,7 @@ public class Release extends Item implements Serializable, Audio {
         duration = 0;
         guid = fields.get(0);
         artistId = fields.get(1);
-        title = fields.get(2);
+        setName(fields.get(2));
         issueDate = getDate(fields.get(4));
         medium =  fields.get(3);
         tracksID = fields.subList(5,fields.size());
@@ -117,51 +116,11 @@ public class Release extends Item implements Serializable, Audio {
     }
 
     /**
-     * Getter for the artist GUID
-     * @return GUID
-     */
-    public String getArtistId() {
-        return artistId;
-    }
-
-    /**
-     * Getter for the title of the release
-     * @return title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
      * Getter for the artist of the release
      * @return artist
      */
     public Artist getArtist(){
         return artist;
-    }
-
-    /**
-     * Getter fot the date the release was issued
-     * @return date issued
-     */
-    public Date getIssueDate() {
-        return issueDate;
-    }
-
-    /**
-     * Getter for the medium of the release
-     * @return medium
-     */
-    public String getMedium() {
-        return medium;
-    }
-
-    /**
-     * Getter for the track GUID's
-     * @return list of GUID
-     */
-    public List<String> getTrackIds() {
-        return tracksID;
     }
 
     /**
@@ -186,6 +145,6 @@ public class Release extends Item implements Serializable, Audio {
      */
     @Override
     public String toString(){
-        return title + " by " + artist;
+        return getName() + " by " + artist;
     }
 }

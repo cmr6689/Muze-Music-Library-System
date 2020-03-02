@@ -90,6 +90,7 @@ public class CommandFactory implements Factory {
         Command command = null;
         switch (matcher.pattern().pattern()) {
             case DATABASE_SEARCH_ARTIST_REQUEST_PATTERN:
+                command = new DatabaseSearchArtistCommand(database, matcher, this);
                 break;
             case DATABASE_SEARCH_SONG_REQUEST_PATTERN:
                 command = new DatabaseSearchSongCommand(database, matcher, this);
@@ -125,6 +126,7 @@ public class CommandFactory implements Factory {
                 command = new HelpCommand();
                 break;
             case LIBRARY_LIST_REQUEST_PATTERN:
+                command = new ListCommand(library, this);
                 break;
         }
 
@@ -194,6 +196,18 @@ public class CommandFactory implements Factory {
     }
 
     /**
+     * Update the list of search results, and print them with total duration associated
+     * with each result
+     * @param searchResults list of search results
+     * @param durations list of durations (same indices as search results)
+     */
+    public void updateSearchResults(List<Item> searchResults, List<Long> durations) {
+        this.searchResults = searchResults;
+        printSearchResultsWithDuration(durations);
+    }
+
+
+    /**
      * Prints the search results so the user may perform actions on the numbered list
      */
     private void printSearchResults() {
@@ -201,7 +215,26 @@ public class CommandFactory implements Factory {
             System.out.println("No results found for the given parameters.");
         } else {
             for (int i = 0; i < searchResults.size(); i++) {
-                System.out.println(i + ") " + searchResults.get(i));
+                System.out.println(formatSearchResult(i));
+            }
+        }
+    }
+
+    /**
+     * Formats a search result for printing (with the provided result ID)
+     * @param index
+     * @return
+     */
+    private String formatSearchResult(int index) {
+        return (index + ") " + searchResults.get(index));
+    }
+
+    private void printSearchResultsWithDuration(List<Long> durations) {
+        if (searchResults.size() == 0) {
+            System.out.println("No results found for the given parameters.");
+        } else {
+            for (int i = 0; i < searchResults.size(); i++) {
+                System.out.println(formatSearchResult(i) + " / Total library duration: " + durations.get(i) + " ms");
             }
         }
     }

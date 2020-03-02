@@ -118,15 +118,4 @@ public class LibrarySearchReleaseCommand extends LibrarySearchCommand {
         return results;
     }
 
-    private List<Release> filterByMinRating(Collection<Release> releases, double minRating) {
-        Stream<Release> releaseStream = releases.stream();
-
-        List<Release> results = releaseStream.filter(release -> {
-            double releaseRating = release.getRating();
-            return (releaseRating >= minRating);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
 }
