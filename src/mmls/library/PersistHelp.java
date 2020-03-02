@@ -16,7 +16,7 @@ public class PersistHelp implements Serializable {
             out.writeObject(lib);
             out.close();
             file.close();
-            System.out.println("Saved file with name: " +  name);
+
         }
         catch (Exception e){
             System.out.println(e);
@@ -31,7 +31,7 @@ public class PersistHelp implements Serializable {
 
             // Method for deserialization of object
             Library returned = (Library) in.readObject();
-            System.out.println("Reading lib");
+
             in.close();
             file.close();
             return returned;
