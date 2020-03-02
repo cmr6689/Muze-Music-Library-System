@@ -57,10 +57,9 @@ public class CommandFactory implements Factory {
     private Database database;
     private ArrayList<Item> searchResults;
 
-    public CommandFactory(Library library, Database database, ArrayList<Item> searchResults) {
+    public CommandFactory(Library library, Database database) {
         this.library = library;
         this.database = database;
-        this.searchResults = searchResults;
     }
     @Override
     public Command createCommand(String request) {
