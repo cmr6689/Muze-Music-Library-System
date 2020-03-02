@@ -97,13 +97,13 @@ public class CommandFactory implements Factory {
             case LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN:
                 break;
             case ADD_REQUEST_PATTERN:
-                command = new AddCommand(library, matcher, searchResults);
+                command = new AddCommand(library, database, matcher, searchResults);
             case RATE_REQUEST_PATTERN:
-                command = new RateCommand(library, matcher, searchResults);
+                command = new RateCommand(library, database, matcher, searchResults);
             case REMOVE_REQUEST_PATTERN:
-                command = new RemoveCommand(library, matcher, searchResults);
+                command = new RemoveCommand(library, database, matcher, searchResults);
             case EXPLORE_REQUEST_PATTERN:
-                command = new ExploreCommand(library, matcher, searchResults);
+                command = new ExploreCommand(library, database, matcher, searchResults);
             case BACK_REQUEST_PATTERN:
                 break;
             case HELP_REQUEST_PATTERN:
