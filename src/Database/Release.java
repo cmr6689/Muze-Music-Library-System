@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Release extends Item implements Serializable {
+public class Release extends Item implements Serializable, Audio {
 
     private long duration;
     private double rating;
     private String artistId;
-    private String title;
     private Date issueDate;
     private String medium;
     private Artist artist;
@@ -43,7 +42,7 @@ public class Release extends Item implements Serializable {
         duration = 0;
         guid = fields.get(0);
         artistId = fields.get(1);
-        title = fields.get(2);
+        this.setName(fields.get(2));
         issueDate = getDate(fields.get(4));
         medium =  fields.get(3);
         tracksID = fields.subList(5,fields.size());
@@ -87,10 +86,7 @@ public class Release extends Item implements Serializable {
         return artistId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
+    @Override
     public Artist getArtist(){
         return artist;
     }
@@ -111,11 +107,13 @@ public class Release extends Item implements Serializable {
         return tracks;
     }
 
+    @Override
     public long getDuration(){
         return duration;
     }
+
     @Override
     public String toString(){
-        return title + " by " + artist;
+        return getName() + " by " + artist;
     }
 }

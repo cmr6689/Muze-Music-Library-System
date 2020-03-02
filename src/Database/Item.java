@@ -51,6 +51,24 @@ public abstract class Item implements Serializable {
         return this.AquisitionDate;
     }
 
+    @Override
+    public int hashCode() {
+        return guid.hashCode();
+    }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (other instanceof Item) {
+            Item otherItem = (Item) other;
+            return this.guid.equals(otherItem.guid);
+        }
+        return false;
+    }
 }
 

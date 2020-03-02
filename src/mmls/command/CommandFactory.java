@@ -74,13 +74,16 @@ public class CommandFactory implements Factory {
                 command = new DatabaseSearchSongCommand(database, matcher, this);
                 break;
             case DATABASE_SEARCH_RELEASE_REQUEST_PATTERN:
+                command = new DatabaseSearchReleaseCommand(database, matcher, this);
                 break;
             case LIBRARY_SEARCH_ARTIST_REQUEST_PATTERN:
                 command = new LibrarySearchArtistCommand(library, matcher, this);
                 break;
             case LIBRARY_SEARCH_SONG_REQUEST_PATTERN:
+                command = new LibrarySearchSongCommand(library, matcher, this);
                 break;
             case LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN:
+                command = new LibrarySearchReleaseCommand(library, matcher, this);
                 break;
             case ADD_REQUEST_PATTERN:
                 command = new AddCommand(library, database, matcher, searchResults);

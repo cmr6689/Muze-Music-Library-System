@@ -3,7 +3,7 @@ package Database;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Song extends Item implements Serializable {
+public class Song extends Item implements Serializable, Audio {
 
     private String artistId;
     private long duration;
@@ -38,6 +38,7 @@ public class Song extends Item implements Serializable {
         return artistId;
     }
 
+    @Override
     public long getDuration() {
         return duration;
     }
@@ -51,6 +52,7 @@ public class Song extends Item implements Serializable {
         return this.getGuid().equals(id);
     }
 
+    @Override
     public Artist getArtist(){
         return artist;
     }

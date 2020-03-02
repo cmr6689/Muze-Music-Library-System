@@ -20,6 +20,7 @@ public class PersistHelp implements Serializable {
         }
         catch (Exception e){
             System.out.println(e);
+            e.printStackTrace();
         }
     }
 

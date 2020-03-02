@@ -3,6 +3,10 @@ package mmls.command;
 import Database.Database;
 import Database.Item;
 import Database.Song;
+import mmls.command.filters.ArtistNameFilter;
+import mmls.command.filters.MaxDurationFilter;
+import mmls.command.filters.MinDurationFilter;
+import mmls.command.filters.TitleFilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,124 +31,28 @@ public class DatabaseSearchSongCommand extends DatabaseSearchCommand {
         String maxDuration = matcher.group("maxDuration");
 
         if (title != null) {
-            results = filterByTitle(songs, title.trim());
+            TitleFilter<Song> titleFilter = new TitleFilter<>();
+            results = titleFilter.filter(songs, title.trim());
         } else {
             results = new ArrayList<>(songs);
         }
 
         if (artistName != null) {
-            results = filterByArtistName(results, artistName.trim());
+            ArtistNameFilter<Song> artistNameFilter = new ArtistNameFilter<>();
+            results = artistNameFilter.filter(results, artistName.trim());
         }
 
         if (minDuration != null) {
-            long minDurationLong = Long.parseLong(minDuration);
-            results = filterByMinDuration(results, minDurationLong);
+            MinDurationFilter<Song> minDurationFilter = new MinDurationFilter<>();
+            results = minDurationFilter.filter(results, minDuration);
         }
 
         if (maxDuration != null) {
-            long maxDurationLong = Long.parseLong(maxDuration);
-            results = filterByMaxDuration(results, maxDurationLong);
+            MaxDurationFilter<Song> maxDurationFilter = new MaxDurationFilter<>();
+            results = maxDurationFilter.filter(results, maxDuration);
         }
 
         List<Item> resultList = new ArrayList<>(results);
         commandFactory.updateSearchResults(resultList);
-    }
-
-    private List<Song> filterByTitle(Collection<Song> songs, String title) {
-        List<Song> results = filterByExactTitle(songs, title);
-
-        if (results.size() == 0) {
-            results = filterByTitleKeywords(songs, title);
-        }
-
-        return results;
-    }
-
-    private List<Song> filterByExactTitle(Collection<Song> songs, String title) {
-        Stream<Song> songStream = songs.stream();
-
-        List<Song> results = songStream.filter(song -> {
-            String songTitle = song.getName();
-            return songTitle.contains(title);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByTitleKeywords(Collection<Song> songs, String title) {
-        Stream<Song> songStream = songs.stream();
-
-        String[] titleKeywords = splitKeywords(title);
-
-        List<Song> results = songStream.filter(song -> {
-            String songTitle = song.getName();
-            for (String keyword : titleKeywords) {
-                if (songTitle.contains(keyword)) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByArtistName(Collection<Song> songs, String artistName) {
-        List<Song> results = filterByExactArtistName(songs, artistName);
-
-        if (results.size() == 0) {
-            results = filterByArtistNameKeywords(songs, artistName);
-        }
-
-        return results;
-    }
-
-    private List<Song> filterByExactArtistName(Collection<Song> songs, String artistName) {
-        Stream<Song> songStream = songs.stream();
-
-        List<Song> results = songStream.filter(song -> {
-            String thisArtistName = song.getArtist().getName();
-            return thisArtistName.contains(artistName);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByArtistNameKeywords(Collection<Song> songs, String artistName) {
-        Stream<Song> songStream = songs.stream();
-
-        String[] artistNameKeywords = splitKeywords(artistName);
-
-        List<Song> results = songStream.filter(song -> {
-            String thisArtistName = song.getArtist().getName();
-            for (String keyword : artistNameKeywords) {
-                if (thisArtistName.contains(keyword)) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByMinDuration(Collection<Song> songs, long minDuration) {
-        Stream<Song> songStream = songs.stream();
-
-        List<Song> results = songStream.filter(song -> {
-            return (song.getDuration() >= minDuration);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByMaxDuration(Collection<Song> songs, long maxDuration) {
-        Stream<Song> songStream = songs.stream();
-
-        List<Song> results = songStream.filter(song -> {
-            return (song.getDuration() <= maxDuration);
-        }).collect(Collectors.toList());
-
-        return results;
     }
 }
