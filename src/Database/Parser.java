@@ -8,6 +8,12 @@ import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+/**
+ * This class uses the provided CSV files to parse each line correctly into the database class.
+ * Each line in the file is converted to its respective object (Song, Artist, Release).
+ * The files are parsed at every program start.
+ * @author Jarred Moyer, Cameron Riu
+ */
 public class Parser {
 
 
@@ -15,6 +21,9 @@ public class Parser {
     private String songFile;
     private String releaseFile;
 
+    /**
+     * Constructor to set the proper file path
+     */
     public Parser(){
         String cwd = ("./files/");
         artistFile = cwd+"artists.csv";
@@ -22,6 +31,10 @@ public class Parser {
         releaseFile =  cwd+"releases.csv";
     }
 
+    /**
+     * Runs the parse method to parse the songs, artists, and releases into the database
+     * @param db : database containing a HashMap of each collection
+     */
     public void runParse(Database db) {
 
 
@@ -38,6 +51,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Creates the file reader
+     * @param name of the reader
+     * @return the BufferedReader
+     * @throws IOException
+     */
     private BufferedReader createReader(String name) throws IOException{
 
         return new BufferedReader(new FileReader(name));
@@ -53,6 +72,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Splits each line of the CSV file to gather each piece of data
+     * @param line line of the CSV file being split
+     * @return an arraylist containing each piece of data from a line
+     */
     private ArrayList<String> splitLine(String line){
 
         ArrayList<String> returned =  new ArrayList<>();
@@ -91,6 +115,12 @@ public class Parser {
         return returned;
     }
 
+    /**
+     * Used to read the artist CSV file into the database with each line representing an artist object.
+     * @param db to add an artist to
+     * @param name of the reader
+     * @throws IOException
+     */
     private void readArtists(Database db, String name)throws IOException{
         BufferedReader reader =createReader(name);
         String line= "";
@@ -102,6 +132,12 @@ public class Parser {
 
     }
 
+    /**
+     * Used to read the song csv file into the database with each line representing a song object.
+     * @param db to add a song to
+     * @param name of the reader
+     * @throws IOException
+     */
     private void readSong(Database db, String name)throws IOException{
         BufferedReader reader =createReader(name);
         String line= "";
@@ -116,6 +152,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Used to read the release csv file into the database with each line representing a release object
+     * @param db to add a release to
+     * @param name of the reader
+     * @throws IOException
+     * @throws ParseException
+     */
     private void readRelease(Database db, String name) throws IOException, ParseException {
         BufferedReader reader =createReader(name);
         String line= "";
@@ -130,6 +173,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Calls the read methods for all 3 CSV files at once
+     * @param database to be written to
+     * @throws IOException
+     * @throws ParseException
+     */
     public void parse(Database database) throws IOException, ParseException {
 
         readArtists(database,artistFile);
