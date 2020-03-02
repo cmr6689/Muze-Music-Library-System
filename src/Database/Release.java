@@ -71,6 +71,7 @@ public class Release extends Item implements Serializable {
             }
         }
     }
+
     private void swapTracks(ArrayList<Song> songs){
         for(String s: tracksID){
             for(Song song: songs){
@@ -110,6 +111,9 @@ public class Release extends Item implements Serializable {
         return tracks;
     }
 
+    public long getDuration(){
+        return duration;
+    }
     @Override
     public String toString(){
         return title + " by " + artist;
