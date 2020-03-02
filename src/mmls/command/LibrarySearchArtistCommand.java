@@ -4,8 +4,11 @@ import Database.Artist;
 import Database.Database;
 import Database.Parser;
 import Database.Item;
+import Database.Song;
 import mmls.library.Library;
+import mmls.library.PersistHelp;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,21 +20,6 @@ import java.util.stream.Stream;
 public class LibrarySearchArtistCommand extends LibrarySearchCommand {
     public LibrarySearchArtistCommand(Library library, Matcher matcher, CommandFactory commandFactory) {
         super(library, matcher, commandFactory);
-    }
-
-    private Database foo() throws IOException {
-
-        String cwd = (".\\files\\");
-
-
-        String artistLoc = cwd+"artists.csv";
-        String songLoc =  cwd+"songs.csv";
-        String releaseLoc =  cwd+"releases.csv";
-
-        Parser parser =  new Parser(artistLoc,songLoc,releaseLoc);
-        Database db =  new Database();
-        parser.parse(db);
-        return db;
     }
 
     @Override
@@ -86,17 +74,11 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
     private List<Artist> filterByNameKeywords(Collection<Artist> artists, String name) {
         Stream<Artist> artistStream = artists.stream();
 
-        String[] nameKeywords;
-        try {
-            nameKeywords = name.split(" ");
-        } catch (NullPointerException e) {
-            nameKeywords = new String[]{name};
-        }
+        String[] nameKeywords = splitKeywords(name);
 
-        String[] finalNameKeywords = nameKeywords;
         List<Artist> results = artistStream.filter(artist -> {
             String artistName = artist.getName();
-            for (String keyword : finalNameKeywords) {
+            for (String keyword : nameKeywords) {
                 if (artistName.contains(keyword)) {
                     return true;
                 }
@@ -128,20 +110,24 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
         return results;
     }
 
+    private String[] splitKeywords(String searchInput) {
+        String[] keywords;
+        try {
+            keywords = searchInput.split(" ");
+        } catch (NullPointerException e) {
+            keywords = new String[]{searchInput};
+        }
+        return keywords;
+    }
+
     private List<Artist> filterByTypeKeywords(Collection<Artist> artists, String type) {
         Stream<Artist> artistStream = artists.stream();
 
-        String[] typeKeywords;
-        try {
-            typeKeywords = type.split(" ");
-        } catch (NullPointerException e) {
-            typeKeywords = new String[]{type};
-        }
+        String[] typeKeywords = splitKeywords(type);
 
-        String[] finalTypeKeywords = typeKeywords;
         List<Artist> results = artistStream.filter(artist -> {
             String artistType = artist.getGenre();
-            for (String keyword : finalTypeKeywords) {
+            for (String keyword : typeKeywords) {
                 if (artistType.contains(keyword)) {
                     return true;
                 }

@@ -5,11 +5,12 @@ import Database.Item;
 import mmls.library.Library;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class ExploreCommand extends LibraryCommand implements Command {
 
-    public ExploreCommand(Library library, Matcher matcher, ArrayList<Item> results) {
+    public ExploreCommand(Library library, Matcher matcher, List<Item> results) {
         super(library, matcher, results);
     }
 
