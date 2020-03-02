@@ -1,6 +1,8 @@
 package Database;
 
-public abstract class Item {
+import java.io.Serializable;
+
+public abstract class Item implements Serializable {
     private String guid;
     private String name;
     private double rating;

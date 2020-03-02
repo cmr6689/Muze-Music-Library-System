@@ -1,19 +1,36 @@
 package mmls.command;
 
+import Database.Database;
 import Database.Item;
+import Database.Release;
+import Database.Song;
 import mmls.library.Library;
 import mmls.library.LibraryItem;
 
-public class RemoveCommand implements Command {
-    private Library library;
-    private String guid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 
-    public RemoveCommand(Library library, String guid) {
-        this.library = library;
-        this.guid = guid;
+public class RemoveCommand extends LibraryCommand implements Command {
+
+    public RemoveCommand(Library library, Database database, Matcher matcher, List<Item> results) {
+        super(library, database, matcher, results);
     }
 
     public void executeCommand() {
-        library.removeItem(this.guid);
+        boolean found = false;
+        for (Song song : library.getSongs()) {
+            if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+                library.removeSong(song.getGuid());
+                found = true;
+            }
+        }
+        if (!found) {
+            for (Release release : library.getReleases()) {
+                if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
+                    library.removeRelease(release.getGuid());
+                }
+            }
+        }
     }
 }

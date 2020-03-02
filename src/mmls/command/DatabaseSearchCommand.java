@@ -1,22 +1,24 @@
 package mmls.command;
 
 import Database.Database;
+import Database.Item;
+import mmls.library.Library;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
 
-public class DatabaseSearchCommand implements Command {
-    private String keyword;
-    private ArrayList<String> arguments;
-    private Database database;
+public abstract class DatabaseSearchCommand implements Command {
+    protected Database database;
+    protected Matcher matcher;
+    protected CommandFactory commandFactory;
 
-    public DatabaseSearchCommand(String keyword, ArrayList<String> arguments, Database database) {
-        this.keyword = keyword;
-        this.arguments = arguments;
+    public DatabaseSearchCommand(Database database, Matcher matcher, CommandFactory commandFactory) {
         this.database = database;
+        this.matcher = matcher;
+        this.commandFactory = commandFactory;
     }
 
-    @Override
-    public void executeCommand() {
-
+    protected void notifyCommandFactory(List<Item> searchResults) {
+        commandFactory.updateSearchResults(searchResults);
     }
 }

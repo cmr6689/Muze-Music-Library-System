@@ -2,7 +2,7 @@ package mmls.library;
 
 import java.io.*;
 
-public class PersistHelp {
+public class PersistHelp implements Serializable {
     String name;
     public PersistHelp(){
         name = "LibPersist";
@@ -16,7 +16,7 @@ public class PersistHelp {
             out.writeObject(lib);
             out.close();
             file.close();
-            System.out.println("Saved file with name: " +  name);
+
         }
         catch (Exception e){
             System.out.println(e);
@@ -31,7 +31,7 @@ public class PersistHelp {
 
             // Method for deserialization of object
             Library returned = (Library) in.readObject();
-            System.out.println("Reading lib");
+
             in.close();
             file.close();
             return returned;
@@ -41,5 +41,8 @@ public class PersistHelp {
         }
         return null;
     }
-
+    public String getName()
+    {
+        return name;
+    }
 }

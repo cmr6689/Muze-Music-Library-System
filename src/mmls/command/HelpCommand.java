@@ -1,6 +1,5 @@
 package mmls.command;
 
-import factory.Request;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,11 @@ public class HelpCommand implements Command {
 
     @Override
     public void executeCommand() {
-        System.out.println("ALL POSSIBLE COMMANDS:");
+        System.out.println("The available commands are listed below.");
+        System.out.println("Fields enclosed in brackets [] are optional.");
+        System.out.println("Fields enclosed in curly braces {} are required.");
+        System.out.println("Fields separated by | accept either one of the enclosed options.");
+        System.out.println("--- Available commands ---");
         System.out.println("database search artist [keywords]");
         System.out.println("database search song [title] [artist name] [min duration] [max duration] [min rating]");
         System.out.println("database search release [title] [artist name] [artist GUID] [track name] [track GUID] [min date] [max date]");
