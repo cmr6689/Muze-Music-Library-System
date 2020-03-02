@@ -20,13 +20,31 @@ public class Release extends Item implements Serializable {
     private List<String> tracksID;
     private ArrayList<Song> tracks;
     private String guid;
+    private final String defaultSeg = "01";
+
+    private Date getDate(String date) throws ParseException{
+        String[]  split =  date.split("-");
+        if(split.length == 3){
+            return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        }
+        else if(split.length == 1){
+            String refactoredDate = date + "-" + defaultSeg + "-" + defaultSeg;
+            return new SimpleDateFormat("yyyy-MM-dd").parse(refactoredDate);
+        }
+        else{
+            String refactoredDate = date + "-" + defaultSeg;
+            return new SimpleDateFormat("yyyy-MM-dd").parse(refactoredDate);
+        }
+
+    }
 
     public Release(ArrayList<String> fields, Database db) throws ParseException {
         super(fields.get(0));
+
         guid = fields.get(0);
         artistId = fields.get(1);
         title = fields.get(2);
-        issueDate = new SimpleDateFormat("yyyy/MM/dd").parse(fields.get(4));
+        issueDate = getDate(fields.get(4));
         medium =  fields.get(3);
         tracksID = fields.subList(5,fields.size());
         tracks = new ArrayList<>();

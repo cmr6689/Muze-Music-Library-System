@@ -39,9 +39,8 @@ public class Parser {
     }
 
     private BufferedReader createReader(String name) throws IOException{
-        System.out.println(System.getProperty("user.dir"));
-        return new BufferedReader(new FileReader(name));
 
+        return new BufferedReader(new FileReader(name));
     }
 
     private String removeLeadingComma(String line){
@@ -64,23 +63,30 @@ public class Parser {
             }
             return  returned;
         }
-        String tempRunning = "";
-        for(String s: tempField){
-            if(!s.contains("\"")){
-                if(tempRunning!= ""){
 
-                    returned.add(removeLeadingComma(tempRunning));
+        String tempRunning = "";
+        char[] tempLine = line.toCharArray();
+        int count = 0;
+        for(char c: tempLine){
+            if(c== ','){
+                if(count%2 == 0){
+                    returned.add(tempRunning);
                     tempRunning = "";
                 }
-                returned.add(s);
+                else{
+                    tempRunning =  tempRunning + c;
+                }
+            }
+            else if(c=='"'){
+                count++;
+                tempRunning = tempRunning + c;
             }
             else{
-                tempRunning += "," + s;
+                tempRunning = tempRunning + c;
             }
+            //count++;
         }
-        if(!tempRunning.equals("\"")){
-            returned.add(removeLeadingComma(tempRunning));
-        }
+        returned.add(tempRunning);
 
         return returned;
     }
@@ -103,7 +109,7 @@ public class Parser {
         while((line = reader.readLine()) != null){
 
             ArrayList<String> fields = splitLine(line);
-
+            //System.out.println(fields.toString());
             Song song =  new Song(fields,db);
             db.addSong(song);
 

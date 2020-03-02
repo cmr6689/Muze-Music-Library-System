@@ -16,28 +16,17 @@ public class Song extends Item implements Serializable {
         duration =  Long.parseLong(fields.get(2));
         String name = fields.get(3);
         this.setName(name);
-        if(name.contains("My Sweet Lord")){
-            for(String s: fields){
-                System.out.println(s);
-            }
-        }
+
         artist = null;
         swapArtistName(db);
         this.setRating(0);
-        System.out.println("Done : " + (artist ==  null));
+
     }
 
     private void swapArtistName(Database db){
 
-        boolean debug = artistId.equals("89ad4ac3-39f7-470e-963a-56509c546377");
-
         for(Artist a: db.getArtists()){
-            System.out.println("Artist is: " + a.getGuid());
-            if(debug){
-                System.out.println("BERRY");
-                System.out.println(a.getGuid().equals("89ad4ac3-39f7-470e-963a-56509c546377"));
-                System.out.println("Name: " +  this.getName());
-            }
+
             if(a.equalsGuid(artistId)){
                artist = a;
                 break;
