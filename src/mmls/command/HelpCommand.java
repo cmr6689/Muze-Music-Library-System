@@ -3,11 +3,21 @@ package mmls.command;
 
 import java.util.ArrayList;
 
+/**
+ * This class’ only responsibility is to print out the list of possible commands and how to use them.
+ * @author Cameron Riu, Shane Burke
+ */
 public class HelpCommand implements Command {
     private String command;
 
+    /**
+     * Creates the command
+     */
     public HelpCommand() {}
 
+    /**
+     * Prints out the list of possible commands
+     */
     @Override
     public void executeCommand() {
         System.out.println("The available commands are listed below.");
