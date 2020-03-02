@@ -1,5 +1,6 @@
 package mmls.command;
 
+import Database.Database;
 import Database.Item;
 import Database.Release;
 import Database.Song;
@@ -12,8 +13,8 @@ import java.util.regex.Matcher;
 
 public class RemoveCommand extends LibraryCommand implements Command {
 
-    public RemoveCommand(Library library, Matcher matcher, List<Item> results) {
-        super(library, matcher, results);
+    public RemoveCommand(Library library, Database database, Matcher matcher, List<Item> results) {
+        super(library, database, matcher, results);
     }
 
     public void executeCommand() {

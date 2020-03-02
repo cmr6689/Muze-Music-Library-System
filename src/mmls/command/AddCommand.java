@@ -1,5 +1,6 @@
 package mmls.command;
 
+import Database.Database;
 import Database.Item;
 import Database.Release;
 import Database.Song;
@@ -12,14 +13,14 @@ import java.util.regex.Matcher;
 
 public class AddCommand extends LibraryCommand implements Command {
 
-    public AddCommand(Library library, Matcher matcher, List<Item> results) {
-        super(library, matcher, results);
+    public AddCommand(Library library, Database database, Matcher matcher, List<Item> results) {
+        super(library, database, matcher, results);
     }
 
     @Override
     public void executeCommand() {
         if (matcher.group("type").equals("song")) {
-            for (Song song : library.getSongs()) {
+            for (Song song : database.getSongs()) {
                 if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
                     if (matcher.group("date") != null) {
                         Date date = new Date(matcher.group("date"));
@@ -33,7 +34,7 @@ public class AddCommand extends LibraryCommand implements Command {
                 }
             }
         } else if (matcher.group("type").equals("release")) {
-            for (Release release : library.getReleases()) {
+            for (Release release : database.getReleases()) {
                 if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
                     if (matcher.group("date") != null) {
                         Date date = new Date(matcher.group("date"));
