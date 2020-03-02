@@ -7,11 +7,12 @@ import mmls.library.Library;
 import mmls.library.LibraryItem;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class RemoveCommand extends LibraryCommand implements Command {
 
-    public RemoveCommand(Library library, Matcher matcher, ArrayList<Item> results) {
+    public RemoveCommand(Library library, Matcher matcher, List<Item> results) {
         super(library, matcher, results);
     }
 

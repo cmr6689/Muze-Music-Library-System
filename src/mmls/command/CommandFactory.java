@@ -55,7 +55,7 @@ public class CommandFactory implements Factory {
 
     private Library library;
     private Database database;
-    private ArrayList<Item> searchResults;
+    private List<Item> searchResults;
 
     public CommandFactory(Library library, Database database) {
         this.library = library;
@@ -128,7 +128,7 @@ public class CommandFactory implements Factory {
         return matcher;
     }
 
-    public void updateSearchResults(ArrayList<Item> searchResults) {
+    public void updateSearchResults(List<Item> searchResults) {
         this.searchResults = searchResults;
         System.out.println(searchResults.size());
     }
