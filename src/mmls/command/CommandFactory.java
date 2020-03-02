@@ -4,6 +4,7 @@ import Database.Database;
 import Database.Song;
 import Database.Item;
 import mmls.library.Library;
+import Database.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,6 +55,7 @@ public class CommandFactory implements Factory {
 
     private Library library;
     private Database database;
+    private List<Item> searchResults;
 
     public CommandFactory(Library library, Database database) {
         this.library = library;
@@ -91,6 +93,7 @@ public class CommandFactory implements Factory {
             case DATABASE_SEARCH_RELEASE_REQUEST_PATTERN:
                 break;
             case LIBRARY_SEARCH_ARTIST_REQUEST_PATTERN:
+                command = new LibrarySearchArtistCommand(library, matcher, this);
                 break;
             case LIBRARY_SEARCH_SONG_REQUEST_PATTERN:
                 break;
@@ -125,4 +128,10 @@ public class CommandFactory implements Factory {
         }
         return matcher;
     }
+
+    public void updateSearchResults(List<Item> searchResults) {
+        this.searchResults = searchResults;
+        System.out.println(searchResults.size());
+    }
+
 }
