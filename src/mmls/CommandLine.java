@@ -1,6 +1,7 @@
 package mmls;
 
 import Database.Database;
+import mmls.command.Command;
 import mmls.command.CommandFactory;
 import mmls.library.Library;
 import mmls.library.PersistHelp;
@@ -16,6 +17,7 @@ public class CommandLine {
 
     private static final String WELCOME_TEXT = "Welcome to the Muze Music Library System. Type [exit] to close the program.";
     private static final String INPUT_PROMPT_TEXT = "Please enter a command.\nUser: ";
+    private static final String INVALID_REQUEST_MESSAGE = "Invalid request. Please type \"help\" to see the list of available commands.";
 
     public static void main(String ...args) {
 
@@ -33,40 +35,28 @@ public class CommandLine {
         }
 
         Database database = new Database();
-        String cwd = ("./files/");
-        String artistLoc = cwd+"artists.csv";
-        String songLoc =  cwd+"songs.csv";
-        String releaseLoc =  cwd+"releases.csv";
-        Parser parser =  new Parser(artistLoc,songLoc,releaseLoc);
-        try{
-            parser.parse(database);
-        }
-        catch (IOException ioe) {
-            System.out.println("There were issues Loading files: " + ioe);
-            System.out.println("Now displaying files found in aimed current working director (//files)");
-            System.out.println("Did you put your files in the /files?");
-            File f = new File("./files");
-            for (File i : f.listFiles()) {
-                System.out.println(i.getName());
-            }
-        }
-
+        
+        Parser parser =  new Parser();
+        parser.runParse(database);
 
         String userInput;
+        CommandFactory commandFactory = new CommandFactory(library, database);
         System.out.println(WELCOME_TEXT);
         while (true) {
             System.out.print(INPUT_PROMPT_TEXT);
             userInput = scanner.nextLine();
             if (userInput.equals("exit")) break;
-            CommandFactory request = new CommandFactory(library, database);
-            request.createCommand(userInput);
+            processRequest(userInput, commandFactory);
             System.out.println();
         }
+    }
 
-
-        /*Matcher m = r.matcher(userInput);
-        if (m.matches()) {
-            System.out.println(m.group("name"));
-        }*/
+    private static void processRequest(String userInput, CommandFactory commandFactory) {
+        Command command = commandFactory.createCommand(userInput);
+        if (command != null) {
+            command.executeCommand();
+        } else {
+            System.out.println(INVALID_REQUEST_MESSAGE);
+        }
     }
 }

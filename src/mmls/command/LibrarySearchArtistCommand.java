@@ -1,15 +1,9 @@
 package mmls.command;
 
 import Database.Artist;
-import Database.Database;
-import Database.Parser;
 import Database.Item;
-import Database.Song;
 import mmls.library.Library;
-import mmls.library.PersistHelp;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -27,30 +21,30 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
         Collection<Artist> artists = library.getArtists();
         List<Artist> results;
 
-        try {
-            String name = matcher.group("name");
+        String name = matcher.group("name");
+        String type = matcher.group("type");
+        String minRating = matcher.group("minRating");
+
+        if (name != null) {
             results = filterByName(artists, name);
-        } catch (IllegalArgumentException e) {
+        } else {
             results = new ArrayList<>(artists);
         }
 
-        try {
-            String type = matcher.group("type");
+        if (type != null) {
             results = filterByType(results, type);
-        } catch (IllegalArgumentException ignored) {}
+        }
 
-        try {
-            double minRating = Integer.parseInt(matcher.group("minRating"));
-            results = filterByMinRating(results, minRating);
-        } catch (IllegalArgumentException ignored) {}
+        if (minRating != null) {
+            double minRatingDouble = Integer.parseInt(minRating);
+            results = filterByMinRating(results, minRatingDouble);
+        }
 
         List<Item> resultList = new ArrayList<>(results);
         commandFactory.updateSearchResults(resultList);
     }
 
     private List<Artist> filterByName(Collection<Artist> artists, String name) {
-        System.out.println(name);
-        System.out.println(artists);
         List<Artist> results = filterByExactName(artists, name);
 
         if (results.size() == 0) {
@@ -113,7 +107,7 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
     private String[] splitKeywords(String searchInput) {
         String[] keywords;
         try {
-            keywords = searchInput.split(" ");
+            keywords = searchInput.trim().split(" ");
         } catch (NullPointerException e) {
             keywords = new String[]{searchInput};
         }
@@ -122,6 +116,7 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
 
     private List<Artist> filterByTypeKeywords(Collection<Artist> artists, String type) {
         Stream<Artist> artistStream = artists.stream();
+
 
         String[] typeKeywords = splitKeywords(type);
 

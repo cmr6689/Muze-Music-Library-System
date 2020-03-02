@@ -41,19 +41,10 @@ public class Song extends Item implements Serializable {
                 System.out.println("Name: " +  this.getName());
             }
             if(a.equalsGuid(artistId)){
-                ArrayList<String> vals =  new ArrayList<>();
-                vals.add(a.getGuid());
-                vals.add(a.getName());
-                if(a.hasGenre()){
-                    vals.add(a.getGenre());
-                }
-                Artist temp =  new Artist(vals);
-                artist = temp;
-                System.out.println("GUCCI " + temp);
+               artist = a;
                 break;
             }
         }
-        
     }
 
     public String getArtistId() {
