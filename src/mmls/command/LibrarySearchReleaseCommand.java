@@ -3,6 +3,7 @@ package mmls.command;
 import Database.*;
 import Database.Release;
 import Results.*;
+import mmls.command.filters.*;
 import mmls.library.Library;
 
 import java.util.ArrayList;
@@ -34,13 +35,15 @@ public class LibrarySearchReleaseCommand extends LibrarySearchCommand {
         String sortBy = matcher.group("sortBy");
 
         if (title != null) {
-            results = filterByTitle(releases, title.trim());
+            TitleFilter<Release> titleFilter = new TitleFilter<>();
+            results = titleFilter.filter(releases, title.trim());
         } else {
             results = new ArrayList<>(releases);
         }
 
         if (artistName != null) {
-            results = filterByArtistName(results, artistName.trim());
+            ArtistNameFilter<Release> artistNameFilter = new ArtistNameFilter<>();
+            results = artistNameFilter.filter(results, artistName.trim());
         } else if (artistGuid != null) {
             results = filterByArtistGuid(results, artistGuid.trim());
         }
@@ -52,18 +55,18 @@ public class LibrarySearchReleaseCommand extends LibrarySearchCommand {
         }
 
         if (minDuration != null) {
-            long minDurationLong = Long.parseLong(minDuration);
-            results = filterByMinDuration(results, minDurationLong);
+            MinDurationFilter<Release> minDurationFilter = new MinDurationFilter<>();
+            results = minDurationFilter.filter(results, minDuration);
         }
 
         if (maxDuration != null) {
-            long maxDurationLong = Long.parseLong(maxDuration);
-            results = filterByMaxDuration(results, maxDurationLong);
+            MaxDurationFilter<Release> maxDurationFilter = new MaxDurationFilter<>();
+            results = maxDurationFilter.filter(results, maxDuration);
         }
 
         if (minRating != null) {
-            double minRatingDouble = Integer.parseInt(minRating);
-            results = filterByMinRating(results, minRatingDouble);
+            MinRatingFilter<Release> minRatingFilter = new MinRatingFilter<>();
+            results = minRatingFilter.filter(results, minRating);
         }
 
         List<Item> resultList = new ArrayList<>(results);
@@ -78,84 +81,6 @@ public class LibrarySearchReleaseCommand extends LibrarySearchCommand {
         }
         List<Item> sortedResults = resultSorter.sort(resultList, sortStrategy);
         notifyCommandFactory(sortedResults);
-    }
-
-    private List<Release> filterByTitle(Collection<Release> releases, String title) {
-        List<Release> results = filterByExactTitle(releases, title);
-
-        if (results.size() == 0) {
-            results = filterByTitleKeywords(releases, title);
-        }
-
-        return results;
-    }
-
-    private List<Release> filterByExactTitle(Collection<Release> releases, String title) {
-        Stream<Release> releaseStream = releases.stream();
-
-        List<Release> results = releaseStream.filter(release -> {
-            String releaseTitle = release.getName();
-            return releaseTitle.contains(title);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Release> filterByTitleKeywords(Collection<Release> releases, String title) {
-        Stream<Release> releaseStream = releases.stream();
-
-        String[] titleKeywords = splitKeywords(title);
-
-        List<Release> results = releaseStream.filter(release -> {
-            String releaseTitle = release.getName();
-            for (String keyword : titleKeywords) {
-                if (releaseTitle.contains(keyword)) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Release> filterByArtistName(Collection<Release> releases, String artistName) {
-        List<Release> results = filterByExactArtistName(releases, artistName);
-
-        if (results.size() == 0) {
-            results = filterByArtistNameKeywords(releases, artistName);
-        }
-
-        return results;
-    }
-
-    private List<Release> filterByExactArtistName(Collection<Release> releases, String artistName) {
-        Stream<Release> releaseStream = releases.stream();
-
-        List<Release> results = releaseStream.filter(release -> {
-            String thisArtistName = release.getArtist().getName();
-            return thisArtistName.contains(artistName);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Release> filterByArtistNameKeywords(Collection<Release> releases, String artistName) {
-        Stream<Release> releaseStream = releases.stream();
-
-        String[] artistNameKeywords = splitKeywords(artistName);
-
-        List<Release> results = releaseStream.filter(release -> {
-            String thisArtistName = release.getArtist().getName();
-            for (String keyword : artistNameKeywords) {
-                if (thisArtistName.contains(keyword)) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
-
-        return results;
     }
 
     private List<Release> filterByArtistGuid(Collection<Release> releases, String artistGuid) {
@@ -190,26 +115,6 @@ public class LibrarySearchReleaseCommand extends LibrarySearchCommand {
             }
             return false;
         }).collect(Collectors.toList());
-        return results;
-    }
-
-    private List<Release> filterByMinDuration(Collection<Release> releases, long minDuration) {
-        Stream<Release> releaseStream = releases.stream();
-
-        List<Release> results = releaseStream.filter(release -> {
-            return (release.getDuration() >= minDuration);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Release> filterByMaxDuration(Collection<Release> releases, long maxDuration) {
-        Stream<Release> releaseStream = releases.stream();
-
-        List<Release> results = releaseStream.filter(release -> {
-            return (release.getDuration() <= maxDuration);
-        }).collect(Collectors.toList());
-
         return results;
     }
 

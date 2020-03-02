@@ -2,9 +2,11 @@ package mmls.command;
 
 import Database.Artist;
 import Database.Item;
+import Database.Release;
 import Database.Song;
 import Results.ResultSorter;
 import Results.SortAlphabetically;
+import mmls.command.filters.*;
 import mmls.library.Library;
 
 import java.util.ArrayList;
@@ -36,19 +38,38 @@ public class LibrarySearchSongCommand extends LibrarySearchCommand {
         String sortBy = matcher.group("sortBy");
 
         if (title != null) {
-            results = filterByTitle(songs, title.trim());
+            TitleFilter<Song> titleFilter = new TitleFilter<>();
+            results = titleFilter.filter(songs, title.trim());
         } else {
             results = new ArrayList<>(songs);
         }
 
         if (artistName != null) {
-            results = filterByArtistName(results, artistName.trim());
+            ArtistNameFilter<Song> artistNameFilter = new ArtistNameFilter<>();
+            results = artistNameFilter.filter(results, artistName.trim());
         } else if (artistGuid != null) {
             results = filterByArtistGuid(results, artistGuid.trim());
         }
 
         if (releaseTitle != null) {
+            results = filterByReleaseTitle(results, releaseTitle.trim());
+        } else if (releaseGuid != null) {
+            results = filterByReleaseGuid(results, releaseGuid);
+        }
 
+        if (minDuration != null) {
+            MinDurationFilter<Song> minDurationFilter = new MinDurationFilter<>();
+            results = minDurationFilter.filter(results, minDuration);
+        }
+
+        if (maxDuration != null) {
+            MaxDurationFilter<Song> maxDurationFilter = new MaxDurationFilter<>();
+            results = maxDurationFilter.filter(results, maxDuration);
+        }
+
+        if (minRating != null) {
+            MinRatingFilter<Song> minRatingFilter = new MinRatingFilter<>();
+            results = minRatingFilter.filter(results, minRating);
         }
 
         List<Item> resultList = new ArrayList<>(results);
@@ -66,89 +87,55 @@ public class LibrarySearchSongCommand extends LibrarySearchCommand {
         notifyCommandFactory(sortedResults);
     }
 
-    private List<Song> filterByTitle(Collection<Song> songs, String title) {
-        List<Song> results = filterByExactTitle(songs, title);
-
-        if (results.size() == 0) {
-            results = filterByTitleKeywords(songs, title);
-        }
-
-        return results;
-    }
-
-    private List<Song> filterByExactTitle(Collection<Song> songs, String title) {
-        Stream<Song> songStream = songs.stream();
-
-        List<Song> results = songStream.filter(song -> {
-            String songTitle = song.getName();
-            return songTitle.contains(title);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByTitleKeywords(Collection<Song> songs, String title) {
-        Stream<Song> songStream = songs.stream();
-
-        String[] titleKeywords = splitKeywords(title);
-
-        List<Song> results = songStream.filter(song -> {
-            String songTitle = song.getName();
-            for (String keyword : titleKeywords) {
-                if (songTitle.contains(keyword)) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByArtistName(Collection<Song> songs, String artistName) {
-        List<Song> results = filterByExactArtistName(songs, artistName);
-
-        if (results.size() == 0) {
-            results = filterByArtistNameKeywords(songs, artistName);
-        }
-
-        return results;
-    }
-
-    private List<Song> filterByExactArtistName(Collection<Song> songs, String artistName) {
-        Stream<Song> songStream = songs.stream();
-
-        List<Song> results = songStream.filter(song -> {
-            String thisArtistName = song.getArtist().getName();
-            return thisArtistName.contains(artistName);
-        }).collect(Collectors.toList());
-
-        return results;
-    }
-
-    private List<Song> filterByArtistNameKeywords(Collection<Song> songs, String artistName) {
-        Stream<Song> songStream = songs.stream();
-
-        String[] artistNameKeywords = splitKeywords(artistName);
-
-        List<Song> results = songStream.filter(song -> {
-            String thisArtistName = song.getArtist().getName();
-            for (String keyword : artistNameKeywords) {
-                if (thisArtistName.contains(keyword)) {
-                    return true;
-                }
-            }
-            return false;
-        }).collect(Collectors.toList());
-
-        return results;
-    }
 
     private List<Song> filterByArtistGuid(Collection<Song> songs, String artistGuid) {
         Stream<Song> songStream = songs.stream();
         List<Song> results = songStream.filter(song -> {
             return song.getArtist().getGuid().contains(artistGuid);
         }).collect(Collectors.toList());
+        return results;
+    }
+
+    private List<Release> getTitleFilteredReleases(String releaseTitle) {
+        Collection<Release> releases = library.getReleases();
+        TitleFilter<Release> releaseTitleFilter = new TitleFilter<>();
+        return releaseTitleFilter.filter(releases, releaseTitle.trim());
+    }
+
+    private List<Release> getGuidFilteredReleases(String releaseGuid) {
+        releaseGuid = releaseGuid.trim();
+        Collection<Release> releases = library.getReleases();
+        GuidFilter<Release> guidFilter = new GuidFilter<>();
+        List<Release> filteredReleases = guidFilter.filter(releases, releaseGuid);
+        return filteredReleases;
+    }
+
+    private List<Song> filterByReleaseTitle(Collection<Song> songs, String releaseTitle) {
+        List<Release> filteredReleases = getTitleFilteredReleases(releaseTitle);
+
+        List<Song> results = findSongsInReleases(songs, filteredReleases);
+
+        return results;
+    }
+
+    private List<Song> filterByReleaseGuid(Collection<Song> songs, String releaseGuid) {
+        releaseGuid = releaseGuid.trim();
+        List<Release> filteredReleases = getGuidFilteredReleases(releaseGuid);
+
+        List<Song> results = findSongsInReleases(songs, filteredReleases);
+        return results;
+    }
+
+    private List<Song> findSongsInReleases(Collection<Song> songs, List<Release> releases) {
+        List<Song> results = new ArrayList<>();
+        for (Release release : releases) {
+            List<Song> tracks = release.getTracks();
+            for (Song track : tracks) {
+                if (songs.contains(track)) {
+                    results.add(track);
+                }
+            }
+        }
         return results;
     }
 

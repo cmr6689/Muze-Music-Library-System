@@ -52,7 +52,7 @@ public class ExploreCommand extends LibraryCommand implements Command {
         } else {
             for (Release release : library.getReleases()) {
                 if (items.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(release.getGuid())) {
-                    System.out.println(release.getTitle() + " Tracks");
+                    System.out.println(release.getName() + " Tracks");
                     for (int i = 0; i < release.getTracks().size(); i++) {
                         System.out.println(release.getTracks().get(i));
                     }
