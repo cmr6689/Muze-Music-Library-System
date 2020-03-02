@@ -7,6 +7,7 @@ import mmls.library.PersistHelp;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class ParserTest {
@@ -20,7 +21,7 @@ public class ParserTest {
         String songLoc =  cwd+"songs.csv";
         String releaseLoc =  cwd+"releases.csv";
 
-        Parser parser =  new Parser(artistLoc,songLoc,releaseLoc);
+        Parser parser =  new Parser();
         Database db =  new Database();
         try{
             parser.parse(db);
@@ -44,7 +45,9 @@ public class ParserTest {
         System.out.println(newLibrary);
         System.out.println(newLibrary.getSongs().size());
         System.out.println(newLibrary.getSongs().size() ==  lib.getSongs().size());
+        System.out.println("a");
 
+        System.out.println("Done");
 
     }
 

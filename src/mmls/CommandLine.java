@@ -33,24 +33,9 @@ public class CommandLine {
         }
 
         Database database = new Database();
-        String cwd = ("./files/");
-        String artistLoc = cwd+"artists.csv";
-        String songLoc =  cwd+"songs.csv";
-        String releaseLoc =  cwd+"releases.csv";
-        Parser parser =  new Parser(artistLoc,songLoc,releaseLoc);
-        try{
-            parser.parse(database);
-        }
-        catch (IOException ioe) {
-            System.out.println("There were issues Loading files: " + ioe);
-            System.out.println("Now displaying files found in aimed current working director (//files)");
-            System.out.println("Did you put your files in the /files?");
-            File f = new File("./files");
-            for (File i : f.listFiles()) {
-                System.out.println(i.getName());
-            }
-        }
-
+        
+        Parser parser =  new Parser();
+        parser.runParse(database);
 
         String userInput;
         System.out.println(WELCOME_TEXT);
