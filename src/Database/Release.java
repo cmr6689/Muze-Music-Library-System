@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Release extends Item implements Serializable {
 
-
+    private long duration;
     private double rating;
     private String artistId;
     private String title;
@@ -40,7 +40,7 @@ public class Release extends Item implements Serializable {
 
     public Release(ArrayList<String> fields, Database db) throws ParseException {
         super(fields.get(0));
-
+        duration = 0;
         guid = fields.get(0);
         artistId = fields.get(1);
         title = fields.get(2);
@@ -76,6 +76,7 @@ public class Release extends Item implements Serializable {
             for(Song song: songs){
                 if(song.equalsGuid(s)){
                     tracks.add(song);
+                    duration += song.getDuration();
                 }
             }
         }
