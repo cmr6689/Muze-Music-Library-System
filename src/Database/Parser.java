@@ -54,7 +54,7 @@ public class Parser {
     }
 
     private ArrayList<String> splitLine(String line){
-        //System.out.println("Line is: " + line);
+
         ArrayList<String> returned =  new ArrayList<>();
         String[] tempField = line.split(",");
         if(!line.contains("\"")){
