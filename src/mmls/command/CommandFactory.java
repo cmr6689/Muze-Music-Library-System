@@ -56,6 +56,8 @@ public class CommandFactory implements Factory {
     private Library library;
     private Database database;
     private List<Item> searchResults;
+    private ArrayList<Item> releases = new ArrayList<Item>();
+    private Boolean artists = true;
 
     public CommandFactory(Library library, Database database) {
         this.library = library;
@@ -83,6 +85,7 @@ public class CommandFactory implements Factory {
 //        }
         Matcher matcher = getMatcherForInput(request);
         Command command = null;
+
         switch (matcher.pattern().pattern()) {
             case DATABASE_SEARCH_ARTIST_REQUEST_PATTERN:
                 break;
@@ -107,8 +110,19 @@ public class CommandFactory implements Factory {
                 command = new RemoveCommand(library, database, matcher, searchResults);
                 break;
             case EXPLORE_REQUEST_PATTERN:
-                command = new ExploreCommand(library, database, matcher, searchResults);
+                if (artists) {
+                    ExploreCommand exploreCommand = new ExploreCommand(library, database, matcher, searchResults, releases);
+                    command = exploreCommand;
+                    releases = exploreCommand.getItems();
+                    artists = false;
+                } else {
+                    command = new ExploreCommand(library, database, matcher, searchResults, releases);
+                    releases = new ArrayList<Item>();
+                    artists = true;
+                }
+                break;
             case BACK_REQUEST_PATTERN:
+                artists = true;
                 break;
             case HELP_REQUEST_PATTERN:
                 command = new HelpCommand();
