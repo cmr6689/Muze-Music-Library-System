@@ -53,7 +53,7 @@ public class Song extends Item implements Serializable {
                 break;
             }
         }
-        artist = null;
+        
     }
 
     public String getArtistId() {

@@ -31,6 +31,7 @@ public class CommandLine {
         else{
             library = new Library();
         }
+
         Database database = new Database();
         String cwd = ("./files/");
         String artistLoc = cwd+"artists.csv";
