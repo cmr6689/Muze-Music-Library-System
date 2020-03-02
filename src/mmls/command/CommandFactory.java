@@ -12,6 +12,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * This class acts as the ConcreteCreator in the Factory Method pattern. It is responsible for
+ * taking in a user request and determining which command to create based on the arguments of the
+ * request. It uses search results from a search made by the user to modify the library and/or
+ * act on results shown in the command line.
+ * @author Shane Burke, Cameron Riu
+ */
 public class CommandFactory implements Factory {
     // e.g. search library artist The Beatles
     private static final String DATABASE_SEARCH_ARTIST_REQUEST_PATTERN = "^database search artist (?<keywords>[\\w]+[\\S ]*)$";
@@ -59,10 +66,24 @@ public class CommandFactory implements Factory {
     private ArrayList<Item> releases = new ArrayList<Item>();
     private Boolean exploring_artists = true;
 
+    /**
+     * Constructor that intitializes the global library and database for the commands to use
+     * @param library passed in from the start of the program
+     * @param database passed in from the start of the progeam
+     */
     public CommandFactory(Library library, Database database) {
         this.library = library;
         this.database = database;
     }
+
+    /**
+     * Uses the Matcher to check the command for matches to the regex statements and then sets
+     * that command as the command to be returned and executed
+     * The explore command uses a boolean to differentiate whether the explore command is being called a
+     * second time to explore the releases by an artist.
+     * @param request : inputted by the user
+     * @return command being requested by the user
+     */
     @Override
     public Command createCommand(String request) {
         Matcher matcher = getMatcherForInput(request);
@@ -119,6 +140,11 @@ public class CommandFactory implements Factory {
         return command;
     }
 
+    /**
+     * Creates the Matcher to use based on the input
+     * @param request inputted by the user
+     * @return matcher to use
+     */
     private Matcher getMatcherForInput(String request) {
         Matcher matcher = null;
         for (Pattern pattern : patterns) {
@@ -130,11 +156,18 @@ public class CommandFactory implements Factory {
         return matcher;
     }
 
+    /**
+     * After the user searches, update the list of search results to allow easy library commands
+     * @param searchResults list of searched items
+     */
     public void updateSearchResults(List<Item> searchResults) {
         this.searchResults = searchResults;
         printSearchResults();
     }
 
+    /**
+     * Prints the search results so the user may perform actions on the numbered list
+     */
     private void printSearchResults() {
         if (searchResults.size() == 0) {
             System.out.println("No results found for the given parameters.");
