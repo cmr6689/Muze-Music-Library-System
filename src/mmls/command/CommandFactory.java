@@ -95,19 +95,10 @@ public class CommandFactory implements Factory {
                 command = new RemoveCommand(library, database, matcher, searchResults);
                 break;
             case EXPLORE_REQUEST_PATTERN:
-                if (exploring_artists) {
-                    ExploreCommand exploreCommand = new ExploreCommand(library, database, matcher, searchResults, releases);
-                    command = exploreCommand;
-                    releases = exploreCommand.getItems();
-                    exploring_artists = false;
-                } else {
-                    command = new ExploreCommand(library, database, matcher, searchResults, releases);
-                    releases = new ArrayList<Item>();
-                    exploring_artists = true;
-                }
+                command = explore(matcher);
                 break;
             case BACK_REQUEST_PATTERN:
-                exploring_artists = true;
+                command = back();
                 break;
             case HELP_REQUEST_PATTERN:
                 command = new HelpCommand();
@@ -117,6 +108,43 @@ public class CommandFactory implements Factory {
         }
 
         return command;
+    }
+
+    private Command explore(Matcher matcher) {
+        if (exploring_artists) {
+            return exploreArtists(matcher);
+        } else {
+            return exploreReleases(matcher);
+        }
+    }
+
+    private Command exploreReleases(Matcher matcher) {
+        ExploreCommand exploreCommand = new ExploreCommand(library, database, matcher, searchResults, releases);
+        return exploreCommand;
+    }
+
+    private Command exploreArtists(Matcher matcher) {
+        ExploreCommand command = new ExploreCommand(library, database, matcher, searchResults, releases);
+        releases = command.getItems();
+
+        exploring_artists = false;
+        return command;
+    }
+
+    private Command back() {
+        Command command = null;
+        if (!exploring_artists) {
+            exploring_artists = true;
+            System.out.println("Exploring artists:");
+            printSearchResults();
+            releases.clear();
+            command = makeEmptyCommand();
+        }
+        return command;
+    }
+
+    private Command makeEmptyCommand() {
+        return () -> { };
     }
 
     private Matcher getMatcherForInput(String request) {

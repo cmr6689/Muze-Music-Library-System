@@ -29,12 +29,18 @@ public class ExploreCommand extends LibraryCommand implements Command {
 
     @Override
     public void executeCommand() {
+        int resultId = Integer.parseInt(matcher.group("id").trim());
+        if (resultId >= results.size()) {
+            System.out.println("Invalid search result ID. Please enter one of the ID numbers shown above.");
+            return;
+        }
+
         if (items.size() <= 0) {
             for (Artist artist : library.getArtists()) {
-                if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(artist.getGuid())) {
+                if (results.get(resultId).getGuid().equals(artist.getGuid())) {
                     System.out.println("\n" + artist.getName() + " Songs:");
                     for (Song song : library.getSongs()) {
-                        if (song.getArtist().getGuid().equals(artist.getGuid())) System.out.println(song.toString());
+                        if (song.getArtist().getGuid().equals(artist.getGuid())) System.out.println("* " + song.toString());
                     }
                     System.out.println();
                     System.out.println(artist.getName() + " Releases: (releases may be explored)");
@@ -51,10 +57,10 @@ public class ExploreCommand extends LibraryCommand implements Command {
             }
         } else {
             for (Release release : library.getReleases()) {
-                if (items.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(release.getGuid())) {
+                if (items.get(resultId).getGuid().equals(release.getGuid())) {
                     System.out.println(release.getName() + " Tracks");
                     for (int i = 0; i < release.getTracks().size(); i++) {
-                        System.out.println(release.getTracks().get(i));
+                        System.out.println("* " + release.getTracks().get(i));
                     }
                 }
             }

@@ -18,19 +18,13 @@ public class RemoveCommand extends LibraryCommand implements Command {
     }
 
     public void executeCommand() {
-        boolean found = false;
-        for (Song song : library.getSongs()) {
-            if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(song.getGuid())) {
-                library.removeSong(song.getGuid());
-                found = true;
-            }
+        int resultId = Integer.parseInt(matcher.group("id").trim());
+        if (resultId >= results.size()) {
+            System.out.println("Invalid search result ID. Please enter one of the ID numbers shown above.");
+            return;
         }
-        if (!found) {
-            for (Release release : library.getReleases()) {
-                if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(release.getGuid())) {
-                    library.removeRelease(release.getGuid());
-                }
-            }
-        }
+        Item itemToRemove = results.get(resultId);
+        String guid = itemToRemove.getGuid();
+        library.removeItem(guid);
     }
 }
