@@ -9,7 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * This class holds the data for an artist from one line of the Release CSV file
+ * @author Jarred Moyer, Ryan Borger, Cameron Riu, Shane Burke
  */
 public class Release extends Item implements Serializable {
 
