@@ -57,7 +57,7 @@ public class CommandFactory implements Factory {
     private Database database;
     private List<Item> searchResults;
     private ArrayList<Item> releases = new ArrayList<Item>();
-    private Boolean artists = true;
+    private Boolean exploring_artists = true;
 
     public CommandFactory(Library library, Database database) {
         this.library = library;
@@ -65,27 +65,8 @@ public class CommandFactory implements Factory {
     }
     @Override
     public Command createCommand(String request) {
-//        String[] req = request.split(" ");
-//        ArrayList<String> args = new ArrayList<>(Arrays.asList(req));
-//        args.remove(0);
-//        switch (req[0]) {
-//            case "database":
-//                return new DatabaseSearchCommand(req[0], args);
-//            case "library":
-//                switch (args.get(0)) {
-//                    case "search":
-//                        return new LibrarySearchCommand(library, null);
-//                    case "add":
-//                        createAddCommand(args);
-//                    case "remove":
-//                        return new RemoveCommand(library, null);
-//                }
-//            default:
-//                return new HelpCommand(req[0]);
-//        }
         Matcher matcher = getMatcherForInput(request);
         Command command = null;
-
         switch (matcher.pattern().pattern()) {
             case DATABASE_SEARCH_ARTIST_REQUEST_PATTERN:
                 break;
@@ -110,19 +91,19 @@ public class CommandFactory implements Factory {
                 command = new RemoveCommand(library, database, matcher, searchResults);
                 break;
             case EXPLORE_REQUEST_PATTERN:
-                if (artists) {
+                if (exploring_artists) {
                     ExploreCommand exploreCommand = new ExploreCommand(library, database, matcher, searchResults, releases);
                     command = exploreCommand;
                     releases = exploreCommand.getItems();
-                    artists = false;
+                    exploring_artists = false;
                 } else {
                     command = new ExploreCommand(library, database, matcher, searchResults, releases);
                     releases = new ArrayList<Item>();
-                    artists = true;
+                    exploring_artists = true;
                 }
                 break;
             case BACK_REQUEST_PATTERN:
-                artists = true;
+                exploring_artists = true;
                 break;
             case HELP_REQUEST_PATTERN:
                 command = new HelpCommand();
