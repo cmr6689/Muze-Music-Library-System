@@ -38,10 +38,12 @@ public class ExploreCommand extends LibraryCommand implements Command {
                     }
                     System.out.println();
                     System.out.println(artist.getName() + " Releases: (releases may be explored)");
+                    int i = 0;
                     for (Release release : library.getReleases()) {
                         if (release.getArtist().getGuid().equals(artist.getGuid())) {
-                            System.out.println(release.toString());
+                            System.out.println(i + ") " + release.toString());
                             items.add(release);
+                            i++;
                         }
                     }
                     setItems(items);
