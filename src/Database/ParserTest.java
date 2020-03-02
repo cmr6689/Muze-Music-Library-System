@@ -15,9 +15,7 @@ public class ParserTest {
 
 
 
-        String cwd = (".\\files\\");
-
-
+        String cwd = ("./files/");
         String artistLoc = cwd+"artists.csv";
         String songLoc =  cwd+"songs.csv";
         String releaseLoc =  cwd+"releases.csv";
@@ -29,7 +27,7 @@ public class ParserTest {
         }
         catch (IOException ioe) {
             System.out.println("There were issues Loading files: " + ioe);
-            File f = new File(".\\files");
+            File f = new File("./files");
             for (File i : f.listFiles()) {
                 System.out.println(i.getName());
             }
@@ -43,9 +41,9 @@ public class ParserTest {
         ps.serialize(lib);
 
         Library newLibrary = ps.deserialize();
+        System.out.println(newLibrary);
         System.out.println(newLibrary.getSongs().size());
         System.out.println(newLibrary.getSongs().size() ==  lib.getSongs().size());
-
 
 
     }
