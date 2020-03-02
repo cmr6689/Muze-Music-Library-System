@@ -18,7 +18,7 @@ public class RateCommand extends LibraryCommand implements Command {
     @Override
     public void executeCommand() {
         for (Song song : library.getSongs()) {
-            if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+            if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(song.getGuid())) {
                 song.setRating(Double.parseDouble(matcher.group("rating")));
             }
         }
