@@ -9,22 +9,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 
-public class AddCommand implements Command {
-    private Library library;
-    private Matcher matcher;
-    private ArrayList<Item> items;
+public class AddCommand extends LibraryCommand implements Command {
 
-    public AddCommand(Library library, Matcher matcher, ArrayList<Item> items) {
-        this.library = library;
-        this.matcher = matcher;
-        this.items = items;
+    public AddCommand(Library library, Matcher matcher, ArrayList<Item> results) {
+        super(library, matcher, results);
     }
 
     @Override
     public void executeCommand() {
         if (matcher.group("type").equals("song")) {
             for (Song song : library.getSongs()) {
-                if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+                if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
                     if (matcher.group("date") != null) {
                         Date date = new Date(matcher.group("date"));
                         library.addSong(song, date);
@@ -38,7 +33,7 @@ public class AddCommand implements Command {
             }
         } else if (matcher.group("type").equals("release")) {
             for (Release release : library.getReleases()) {
-                if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
+                if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
                     if (matcher.group("date") != null) {
                         Date date = new Date(matcher.group("date"));
                         library.addRelease(release, date);

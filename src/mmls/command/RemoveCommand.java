@@ -9,28 +9,23 @@ import mmls.library.LibraryItem;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 
-public class RemoveCommand implements Command {
-    private Library library;
-    private Matcher matcher;
-    private ArrayList<Item> items;
+public class RemoveCommand extends LibraryCommand implements Command {
 
-    public RemoveCommand(Library library, Matcher matcher, ArrayList<Item> items) {
-        this.library = library;
-        this.matcher = matcher;
-        this.items = items;
+    public RemoveCommand(Library library, Matcher matcher, ArrayList<Item> results) {
+        super(library, matcher, results);
     }
 
     public void executeCommand() {
         boolean found = false;
         for (Song song : library.getSongs()) {
-            if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+            if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(song.getGuid())) {
                 library.removeSong(song.getGuid());
                 found = true;
             }
         }
         if (!found) {
             for (Release release : library.getReleases()) {
-                if (items.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
+                if (results.get(Integer.getInteger(matcher.group("id"))).getGuid().equals(release.getGuid())) {
                     library.removeRelease(release.getGuid());
                 }
             }

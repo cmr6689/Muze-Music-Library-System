@@ -55,11 +55,12 @@ public class CommandFactory implements Factory {
 
     private Library library;
     private Database database;
-    private List<Item> searchResults;
+    private ArrayList<Item> searchResults;
 
-    public CommandFactory(Library library, Database database) {
+    public CommandFactory(Library library, Database database, ArrayList<Item> searchResults) {
         this.library = library;
         this.database = database;
+        this.searchResults = searchResults;
     }
     @Override
     public Command createCommand(String request) {
@@ -83,7 +84,6 @@ public class CommandFactory implements Factory {
 //        }
         Matcher matcher = getMatcherForInput(request);
         //TODO: Change items array list to search results list
-        ArrayList<Item> items = new ArrayList<>();
         Command command = null;
         switch (matcher.pattern().pattern()) {
             case DATABASE_SEARCH_ARTIST_REQUEST_PATTERN:
@@ -100,13 +100,13 @@ public class CommandFactory implements Factory {
             case LIBRARY_SEARCH_RELEASE_REQUEST_PATTERN:
                 break;
             case ADD_REQUEST_PATTERN:
-                command = new AddCommand(library, matcher, items);
+                command = new AddCommand(library, matcher, searchResults);
             case RATE_REQUEST_PATTERN:
-                command = new RateCommand(library, matcher, items);
+                command = new RateCommand(library, matcher, searchResults);
             case REMOVE_REQUEST_PATTERN:
-                command = new RemoveCommand(library, matcher, items);
+                command = new RemoveCommand(library, matcher, searchResults);
             case EXPLORE_REQUEST_PATTERN:
-                break;
+                command = new ExploreCommand(library, matcher, searchResults);
             case BACK_REQUEST_PATTERN:
                 break;
             case HELP_REQUEST_PATTERN:
@@ -129,7 +129,7 @@ public class CommandFactory implements Factory {
         return matcher;
     }
 
-    public void updateSearchResults(List<Item> searchResults) {
+    public void updateSearchResults(ArrayList<Item> searchResults) {
         this.searchResults = searchResults;
         System.out.println(searchResults.size());
     }
