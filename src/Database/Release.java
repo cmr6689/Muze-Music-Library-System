@@ -8,19 +8,30 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Release extends Item implements Serializable, Audio {
+/**
+ * This class holds the data for an artist from one line of the Release CSV file
+ * @author Jarred Moyer, Ryan Borger, Cameron Riu, Shane Burke
+ */
+public class Release extends Item implements Serializable {
 
     private long duration;
     private double rating;
     private String artistId;
+    private String title;
     private Date issueDate;
     private String medium;
     private Artist artist;
-    private ArrayList<String> tracksID;
+    private List<String> tracksID;
     private ArrayList<Song> tracks;
     private String guid;
     private final String defaultSeg = "01";
 
+    /**
+     * Method to get the date from a provided String
+     * @param date string date
+     * @return Java SimpleDateFormat object of string provided
+     * @throws ParseException
+     */
     private Date getDate(String date) throws ParseException{
         String[]  split =  date.split("-");
         if(split.length == 3){
@@ -37,31 +48,50 @@ public class Release extends Item implements Serializable, Audio {
 
     }
 
+    /**
+     * Creates a release that has a GUID, a duration, an artist GUID, a title, an issue date,
+     * a medium, the tracklist, and the track GUID's
+     * @param fields from the parsed CSV line
+     * @param db database to find the song and artist objects
+     * @throws ParseException
+     */
     public Release(ArrayList<String> fields, Database db) throws ParseException {
         super(fields.get(0));
         duration = 0;
         guid = fields.get(0);
         artistId = fields.get(1);
-        this.setName(fields.get(2));
+        title = fields.get(2);
         issueDate = getDate(fields.get(4));
         medium =  fields.get(3);
-        tracksID = new ArrayList<>(fields.subList(5,fields.size()));
+        tracksID = fields.subList(5,fields.size());
         tracks = new ArrayList<>();
         swapTracks(new ArrayList<>(db.getSongs()));
         swapArtist(new ArrayList<>(db.getArtists()));
         rating = 0;
     }
 
+    /**
+     * Getter fot the rating of the release
+     * @return rating
+     */
     @Override
     public double getRating() {
         return rating;
     }
 
+    /**
+     * Set the rating of the release
+     * @param rate number 1-5
+     */
     @Override
     public void setRating(double rate){
         rating = rate;
     }
 
+    /**
+     * Used to find the artist object in the database to assign to the release
+     * @param artists list of artists
+     */
     private void swapArtist(ArrayList<Artist> artists){
         for(Artist a: artists){
             if(a.equalsGuid(artistId)){
@@ -71,6 +101,10 @@ public class Release extends Item implements Serializable, Audio {
         }
     }
 
+    /**
+     * Used to find the song objects in the database to assign the tracks to the release
+     * @param songs list of songs to be added as tracks
+     */
     private void swapTracks(ArrayList<Song> songs){
         for(String s: tracksID){
             for(Song song: songs){
@@ -82,38 +116,76 @@ public class Release extends Item implements Serializable, Audio {
         }
     }
 
+    /**
+     * Getter for the artist GUID
+     * @return GUID
+     */
     public String getArtistId() {
         return artistId;
     }
 
-    @Override
+    /**
+     * Getter for the title of the release
+     * @return title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Getter for the artist of the release
+     * @return artist
+     */
     public Artist getArtist(){
         return artist;
     }
 
+    /**
+     * Getter fot the date the release was issued
+     * @return date issued
+     */
     public Date getIssueDate() {
         return issueDate;
     }
 
+    /**
+     * Getter for the medium of the release
+     * @return medium
+     */
     public String getMedium() {
         return medium;
     }
 
+    /**
+     * Getter for the track GUID's
+     * @return list of GUID
+     */
     public List<String> getTrackIds() {
         return tracksID;
     }
 
+    /**
+     * Getter for the track list of the release
+     * @return list of songs
+     */
     public ArrayList<Song> getTracks(){
         return tracks;
     }
 
-    @Override
+    /**
+     * Getter for the duration of the release
+     * @return duration
+     */
     public long getDuration(){
         return duration;
     }
 
+    /**
+     * Clean way to print the release
+     * @return title by artist
+     */
     @Override
     public String toString(){
-        return getName() + " by " + artist;
+        return title + " by " + artist;
     }
 }
