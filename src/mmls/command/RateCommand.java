@@ -3,6 +3,7 @@ package mmls.command;
 import Database.Database;
 import Database.Item;
 import Database.Song;
+import Database.Release;
 import mmls.library.Library;
 
 import java.util.ArrayList;
@@ -33,9 +34,21 @@ public class RateCommand extends LibraryCommand implements Command {
      */
     @Override
     public void executeCommand() {
+        int resultId = Integer.parseInt(matcher.group("id").trim());
+        if (resultId >= results.size()) {
+            System.out.println("Invalid search result ID. Please enter one of the ID numbers shown above.");
+            return;
+        }
+        String chosenItemGuid = results.get(resultId).getGuid();
+
         for (Song song : library.getSongs()) {
-            if (results.get(Integer.parseInt(matcher.group("id"))).getGuid().equals(song.getGuid())) {
+            if (chosenItemGuid.equals(song.getGuid())) {
                 song.setRating(Double.parseDouble(matcher.group("rating")));
+            }
+        }
+        for (Release release : library.getReleases()) {
+            if (chosenItemGuid.equals(release.getGuid())) {
+                release.setRating(Double.parseDouble(matcher.group("rating")));
             }
         }
     }

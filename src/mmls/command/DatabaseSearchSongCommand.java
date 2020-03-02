@@ -58,6 +58,6 @@ public class DatabaseSearchSongCommand extends DatabaseSearchCommand {
         }
 
         List<Item> resultList = new ArrayList<>(results);
-        commandFactory.updateSearchResults(resultList);
+        notifyCommandFactory(resultList);
     }
 }

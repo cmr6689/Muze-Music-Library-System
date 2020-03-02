@@ -23,6 +23,6 @@ public class DatabaseSearchArtistCommand extends DatabaseSearchCommand {
         List<Artist> results = titleFilter.filter(artists, keywords);
 
         List<Item> itemList = new ArrayList<>(results);
-        commandFactory.updateSearchResults(itemList);
+        notifyCommandFactory(itemList);
     }
 }

@@ -54,7 +54,7 @@ public class LibrarySearchArtistCommand extends LibrarySearchCommand {
         List<Item> resultList = new ArrayList<>(results);
         ResultSorter resultSorter = new ResultSorter();
         List<Item> sortedResultList = resultSorter.sort(resultList, new SortAlphabetically());
-        commandFactory.updateSearchResults(sortedResultList);
+        notifyCommandFactory(sortedResultList);
     }
 
     private List<Artist> filterByMinRating(Collection<Artist> artists, double minRating) {

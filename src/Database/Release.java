@@ -20,7 +20,7 @@ public class Release extends Item implements Serializable, Audio {
     private Date issueDate;
     private String medium;
     private Artist artist;
-    private List<String> tracksID;
+    private ArrayList<String> tracksID;
     private ArrayList<Song> tracks;
     private String guid;
     private final String defaultSeg = "01";
@@ -62,7 +62,7 @@ public class Release extends Item implements Serializable, Audio {
         setName(fields.get(2));
         issueDate = getDate(fields.get(4));
         medium =  fields.get(3);
-        tracksID = fields.subList(5,fields.size());
+        tracksID = new ArrayList<>(fields.subList(5,fields.size()));
         tracks = new ArrayList<>();
         swapTracks(new ArrayList<>(db.getSongs()));
         swapArtist(new ArrayList<>(db.getArtists()));
