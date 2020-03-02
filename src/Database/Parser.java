@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class Parser {
@@ -26,7 +27,7 @@ public class Parser {
 
         try {
             parse(db);
-        } catch (IOException ioe) {
+        } catch (IOException | ParseException ioe) {
             System.out.println("There were issues Loading files: " + ioe);
             System.out.println("Now displaying files found in aimed current working director (//files)");
             System.out.println("Did you put your files in the /files?");
@@ -109,7 +110,7 @@ public class Parser {
         }
     }
 
-    private void readRelease(Database db, String name) throws IOException{
+    private void readRelease(Database db, String name) throws IOException, ParseException {
         BufferedReader reader =createReader(name);
         String line= "";
 
@@ -123,7 +124,7 @@ public class Parser {
         }
     }
 
-    public void parse(Database database) throws IOException {
+    public void parse(Database database) throws IOException, ParseException {
 
         readArtists(database,artistFile);
         readSong(database,songFile);

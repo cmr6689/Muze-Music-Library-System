@@ -7,6 +7,7 @@ import mmls.library.PersistHelp;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -26,7 +27,7 @@ public class ParserTest {
         try{
             parser.parse(db);
         }
-        catch (IOException ioe) {
+        catch (IOException | ParseException ioe) {
             System.out.println("There were issues Loading files: " + ioe);
             File f = new File("./files");
             for (File i : f.listFiles()) {
