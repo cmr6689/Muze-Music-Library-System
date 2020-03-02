@@ -1,9 +1,13 @@
 package Database;
 
 
+import mmls.library.Library;
+import mmls.library.PersistHelp;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 
 public class ParserTest {
 
@@ -31,7 +35,16 @@ public class ParserTest {
             }
         }
 
+        Library lib = new Library();
+        for(Song s: db.getSongs()){
+            lib.addSong(s);
+        }
+        PersistHelp ps = new PersistHelp();
+        ps.serialize(lib);
 
+        Library newLibrary = ps.deserialize();
+        System.out.println(newLibrary.getSongs().size());
+        System.out.println(newLibrary.getSongs().size() ==  lib.getSongs().size());
 
 
 

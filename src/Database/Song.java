@@ -1,8 +1,9 @@
 package Database;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Song extends Item {
+public class Song extends Item implements Serializable {
 
     private String artistId;
     private String duration;
