@@ -14,6 +14,11 @@ import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class allows the user to search for releases given the parameters of
+ * the search and filters the results based on those parameters.
+ * @author Shane Burke
+ */
 public class LibrarySearchReleaseCommand extends LibrarySearchCommand {
     public LibrarySearchReleaseCommand(Library library, Matcher matcher, CommandFactory commandFactory) {
         super(library, matcher, commandFactory);

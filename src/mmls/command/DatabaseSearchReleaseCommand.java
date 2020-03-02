@@ -12,6 +12,12 @@ import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class allows the user to search for artists given the
+ * parameters of the search and filters the results based on those
+ * parameters.
+ * @author Shane Burke
+ */
 public class DatabaseSearchReleaseCommand extends DatabaseSearchCommand {
 
     public DatabaseSearchReleaseCommand(Database database, Matcher matcher, CommandFactory commandFactory) {

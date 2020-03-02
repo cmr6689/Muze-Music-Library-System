@@ -15,6 +15,11 @@ import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class allows the user to search for songs given the parameters
+ * of the search and filters the results based on those parameters.
+ * @author Shane Burke
+ */
 public class DatabaseSearchSongCommand extends DatabaseSearchCommand {
     public DatabaseSearchSongCommand(Database database, Matcher matcher, CommandFactory commandFactory) {
         super(database, matcher, commandFactory);
