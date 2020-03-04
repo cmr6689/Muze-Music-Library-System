@@ -2,6 +2,7 @@ package mmls.command;
 
 import Database.Database;
 import Database.Item;
+import Database.Audio;
 import Database.Song;
 import Database.Release;
 import mmls.library.Library;
@@ -41,15 +42,12 @@ public class RateCommand extends LibraryCommand implements Command {
         }
         String chosenItemGuid = results.get(resultId).getGuid();
 
-        for (Song song : library.getSongs()) {
-            if (chosenItemGuid.equals(song.getGuid())) {
-                song.setRating(Double.parseDouble(matcher.group("rating")));
-            }
-        }
-        for (Release release : library.getReleases()) {
-            if (chosenItemGuid.equals(release.getGuid())) {
-                release.setRating(Double.parseDouble(matcher.group("rating")));
-            }
+        Item itemToRate = library.getAudioItem(chosenItemGuid);
+        if (itemToRate != null) {
+            double rating = Double.parseDouble(matcher.group("rating"));
+            itemToRate.setRating(rating);
+        } else {
+            System.out.println("Only releases and songs may be rated.");
         }
     }
 }

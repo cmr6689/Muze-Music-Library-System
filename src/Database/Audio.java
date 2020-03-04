@@ -1,6 +1,6 @@
 package Database;
 
 public interface Audio {
-    public Artist getArtist();
-    public long getDuration();
+    Artist getArtist();
+    long getDuration();
 }

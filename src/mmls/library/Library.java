@@ -1,8 +1,6 @@
 package mmls.library;
 
-import Database.Artist;
-import Database.Release;
-import Database.Song;
+import Database.*;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -176,6 +174,12 @@ public class Library implements Serializable {
     private void removeDate(String id){
         acquisitionDates.remove(id);
         persist.serialize(this);
+    }
+
+    public Item getAudioItem(String guid) {
+        if (songs.containsKey(guid)) {
+            return songs.get(guid);
+        } else return releases.getOrDefault(guid, null);
     }
 
 }

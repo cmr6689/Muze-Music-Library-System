@@ -2,11 +2,13 @@ package Database;
 
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * This class holds the data for an artist from one line of the Release CSV file
@@ -22,7 +24,6 @@ public class Release extends Item implements Serializable, Audio {
     private Artist artist;
     private ArrayList<String> tracksID;
     private ArrayList<Song> tracks;
-    private String guid;
     private final String defaultSeg = "01";
 
     /**
@@ -57,7 +58,6 @@ public class Release extends Item implements Serializable, Audio {
     public Release(ArrayList<String> fields, Database db) throws ParseException {
         super(fields.get(0));
         duration = 0;
-        guid = fields.get(0);
         artistId = fields.get(1);
         setName(fields.get(2));
         issueDate = getDate(fields.get(4));
@@ -145,6 +145,19 @@ public class Release extends Item implements Serializable, Audio {
      */
     @Override
     public String toString(){
-        return getName() + " by " + artist;
+        Date durationDate = new Date(duration);
+        DateFormat durationFormatter = new SimpleDateFormat("mm:ss");
+        String durationFormatted = durationFormatter.format(durationDate);
+
+        DateFormat issueDateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        String issueDateFormatted = issueDateFormatter.format(issueDate);
+
+        return getName() +
+                " by " +
+                artist +
+                " (" + issueDateFormatted + ", " +
+                medium + ", " +
+                rating + ", " +
+                durationFormatted + ")";
     }
 }

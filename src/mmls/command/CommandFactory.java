@@ -7,8 +7,12 @@ import Database.Item;
 import Database.Artist;
 import mmls.library.Library;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,7 +115,7 @@ public class CommandFactory implements Factory {
                 command = new AddCommand(library, database, matcher, searchResults);
                 break;
             case RATE_REQUEST_PATTERN:
-                command = new RateCommand(library, database, matcher, searchResults);
+                command = rate(matcher);
                 break;
             case REMOVE_REQUEST_PATTERN:
                 command = new RemoveCommand(library, database, matcher, searchResults);
@@ -139,6 +143,11 @@ public class CommandFactory implements Factory {
         } else {
             return exploreReleases(matcher);
         }
+    }
+
+    private Command rate(Matcher matcher) {
+        List<Item> resultsToRate = exploring_artists ? searchResults : releases;
+        return new RateCommand(library, database, matcher, resultsToRate);
     }
 
     private Command exploreReleases(Matcher matcher) {
@@ -233,8 +242,12 @@ public class CommandFactory implements Factory {
         if (searchResults.size() == 0) {
             System.out.println("No results found for the given parameters.");
         } else {
+            DateFormat durationFormatter = new SimpleDateFormat("mm:ss");
+
             for (int i = 0; i < searchResults.size(); i++) {
-                System.out.println(formatSearchResult(i) + " / Total library duration: " + durations.get(i) + " ms");
+                Date durationDate = new Date(durations.get(i));
+                String durationFormatted = durationFormatter.format(durationDate);
+                System.out.println(formatSearchResult(i) + " | Total library duration: " + durationFormatted);
             }
         }
     }

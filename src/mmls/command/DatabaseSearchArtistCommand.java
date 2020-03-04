@@ -19,6 +19,7 @@ public class DatabaseSearchArtistCommand extends DatabaseSearchCommand {
     public void executeCommand() {
         Collection<Artist> artists = database.getArtists();
         String keywords = matcher.group("keywords");
+        System.out.println("abc" + keywords);
         TitleFilter<Artist> titleFilter = new TitleFilter<>();
         List<Artist> results = titleFilter.filter(artists, keywords);
 
